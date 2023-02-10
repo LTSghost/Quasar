@@ -1,0 +1,65 @@
+[{
+  "item_no": "01",
+  "item_name": "BCD-535WGHSSEDS9",
+  "price": "4200",
+  "eff_date_from": "2023-01-05",
+  "eff_date_to": "2024-02-05",
+  "tax": "应税"
+},
+{
+  "item_no": "02",
+  "item_name": "BCD-178TMPT",
+  "price": "2550",
+  "eff_date_from": "2022-12-15",
+  "eff_date_to": "2023-04-15",
+  "tax": "免税"
+},
+{
+  "item_no": "03",
+  "item_name": "KFR-32GW/K(32556)D2-N5",
+  "price": "3800",
+  "eff_date_from": "2022-11-15",
+  "eff_date_to": "2023-06-30",
+  "tax": "应税"
+},
+{
+  "item_no": "04",
+  "item_name": "BCD-477WDPCU1",
+  "price": "3200",
+  "price": "3200",
+  "eff_date_from": "2022-11-10",
+  "eff_date_to": "2023-03-15",
+  "tax": "零税"
+},
+{
+  "item_no": "05",
+  "item_name": "BCD-545WFPB",
+  "price": "4000",
+  "eff_date_from": "2022-09-11",
+  "eff_date_to": "2023-06-25",
+  "tax": "免税"
+},
+{
+  "item_no": "06",
+  "item_name": "KFR-32GW/(32561)FNAa-2",
+  "price": "1200",
+  "eff_date_from": "2022-11-10",
+  "eff_date_to": "2023-03-15",
+  "tax": "零税"
+},
+{
+  "item_no": "07",
+  "item_name": "KFR-23GW/K(23556)D1-N1",
+  "price": "2200",
+  "eff_date_from": "2022-10-09",
+  "eff_date_to": "2023-03-23",
+  "tax": "应税"
+},
+{
+  "item_no": "08",
+  "item_name": "KFR-32GW/K(32556)D1-N2",
+  "price": "900",
+  "eff_date_from": "2022-11-12",
+  "eff_date_to": "2023-07-15",
+  "tax": "零税"
+}]
