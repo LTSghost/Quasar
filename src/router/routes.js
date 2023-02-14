@@ -35,6 +35,35 @@ const routes = [
       { path: 'prac3', component: () => import('pages/pracThr.vue') }
     ]
   },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'prac4', component: () => import('pages/pracThr1.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'Sol1', component: () => import('pages/PracticeSol1.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'Sol2', component: () => import('pages/PracticeSol2.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'Sol3', component: () => import('pages/PracticeSol3.vue') }
+    ]
+  },
+  
   // {
   //   path: '/prac1',
   //   component: () => import('pages/Bprac1.vue')

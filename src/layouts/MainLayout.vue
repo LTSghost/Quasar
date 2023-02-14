@@ -91,7 +91,31 @@ const linksList = [
     caption: 'read JSON and display',
     icon: 'library_books',
     link: '/prac3'
-  }
+  },
+  {
+    title: 'test4',
+    caption: 'test',
+    icon: 'quiz',
+    link: '/prac4'
+  },
+  {
+    title: 'Sol1',
+    caption: 'Sol1',
+    icon: 'tips_and_updates',
+    link: '/Sol1'
+  },
+  {
+    title: 'Sol2',
+    caption: 'Sol2',
+    icon: 'tips_and_updates',
+    link: '/Sol2'
+  },
+  {
+    title: 'Sol3',
+    caption: 'Sol3',
+    icon: 'tips_and_updates',
+    link: '/Sol3'
+  },
 ]
 
 export default defineComponent({

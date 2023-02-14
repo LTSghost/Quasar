@@ -4,8 +4,8 @@
     <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset">
     <!-- ac pwd -->
     <div class="row">
+      <!-- account -->
         <div class="col q-pl-xl q-pt-xl q-pr-sm q-pb-xs">
-          <!-- account -->
           <q-input
           ref="accountRef"
           filled
@@ -19,8 +19,8 @@
           </q-input>
           
         </div>
+        <!-- pwd -->
         <div class="col q-pl-sm q-pt-xl q-pr-xl q-pb-xs">
-          <!-- pwd -->
           <q-input
           ref="pwdRef"
           filled
@@ -28,7 +28,7 @@
           label="密碼 *"
           :rules="passwordRules"
           :type="isPwd? 'password' : 'text'"
-          v-model="form.password.value">
+          v-model="password">
             <template v-slot:append>
               <q-icon
               :name="isPwd? 'visibility_off' : 'visibility'"
@@ -40,14 +40,14 @@
     </div>
     <!-- school gradDate -->
     <div class="row">
-        <div class="col q-pl-xl q-pt-xs q-pr-sm q-pb-xs">
-          <!-- school -->
+        <!-- school -->
+        <div class="col q-pl-xl q-pt-xs q-pr-sm q-pb-xs"> 
           <q-select
           ref="schoolRef"
           filled
           lazy-rules
           clearable 
-          v-model="form.school.value" 
+          v-model="school" 
           :options="schOpt"
           label="畢業學校 *"
           :rules="[val => !!val || '請選擇畢業學校']"/>
@@ -62,15 +62,16 @@
           :error-message="form.school.msg">
           </q-input> -->
         </div>
-        <div class="col q-pl-sm q-pt-xs q-pr-xl q-pb-xs">
-          <!-- graduate_date -->
+        <!-- graduate_date -->
+        <div class="col q-pl-sm q-pt-xs q-pr-xl q-pb-xs"> 
           <q-input
           ref="gradDateRef"
           filled
           lazy-rules
           label="畢業日期 *"
           v-model="date"
-          :rules="['date']"
+          placeholder="年/月/日"
+          :rules="[(val) => !!val || '請輸入日期']"
           :error="form.gradDate.error"
           :error-message="form.gradDate.msg">
             <template v-slot:append>
@@ -89,14 +90,14 @@
     </div>
     <!-- age email -->
     <div class="row">
+        <!-- age -->
         <div class="col q-pl-xl q-pt-xs q-pr-sm q-pb-xs">
-          <!-- age -->
           <q-input
           ref="ageRef"
           filled
           lazy-rules
           label="年齡 *"
-          v-model="form.age.value"
+          v-model="age"
           :rules="ageRules"
           :error="form.age.error"
           :error-message="form.age.msg">
@@ -105,14 +106,14 @@
             </template> -->
           </q-input>
         </div>
+        <!-- email -->
         <div class="col q-pl-sm q-pt-xs q-pr-xl q-pb-xs">
-          <!-- email -->
           <q-input
           ref="emailRef"
           filled
           lazy-rules
           label="電子郵件 *"
-          v-model="form.email.value"
+          v-model="email"
           :rules="emailRules"
           :error="form.email.error"
           :error-message="form.email.msg">
@@ -127,14 +128,14 @@
     </div>
     <!-- mobile -->
     <div class="row">
+        <!-- mobile -->
         <div class="col-6 q-pl-xl q-pt-xs q-pr-sm">
-          <!-- mobile -->
           <q-input
           ref="mobileRef"
           filled
           lazy-rules
           label="手機號碼 *"
-          v-model="form.mobile.value"
+          v-model="mobile"
           :rules="mobileRules"
           :error="form.mobile.error"
           :error-message="form.mobile.msg">
@@ -172,14 +173,26 @@ const isPwd = ref(true)
 
 const account = ref("abcdef1234567890_")
 const accountRef = ref(null)
+
+const password = ref("a12345B")
 const pwdRef = ref(null)
+
+const school = ref("")
 const schoolRef = ref(null)
+
+const gradDate = ref("")
 const gradDateRef = ref(null)
+
+const age = ref("18")
 const ageRef = ref(null)
+
+const email = ref("JohnnieCena.k.lll@gmail__132as.dff")
 const emailRef = ref(null)
+
+const mobile = ref("0989534292")
 const mobileRef = ref(null)
 
-const date = ref("年/月/日")
+const date = ref("")
 
 const form = ref({
   account: {
@@ -265,8 +278,10 @@ const onSubmit = () => {
   emailRef.value.validate()
   mobileRef.value.validate()
 
-  if (accountRef.value.hasError || pwdRef.value.hasError) {
+  if (accountRef.value.hasError || pwdRef.value.hasError || schoolRef.value.hasError 
+      || gradDateRef.value.hasError) {
           // form has error
+          return 0
   }
   else if (toggleValue.value !== true) {
     $q.notify({
@@ -285,12 +300,18 @@ const onSubmit = () => {
 const onReset = () => {
   // form.value.account = ""
   account.value = ""
-  form.value.password = ""
-  form.value.school = ""
+  password.value = ""
+  school.value = ""
   date.value = "年/月/日"
-  form.value.age = ""
-  form.value.email = ""
-  form.value.mobile = ""
+  age.value = ""
+  email.value = ""
+  mobile.value = ""
+  // form.value.password = ""
+  // form.value.school = ""
+  // date.value = "年/月/日"
+  // form.value.age = ""
+  // form.value.email = ""
+  // form.value.mobile = ""
 
   accountRef.value.resetValidation()
   pwdRef.value.resetValidation()
