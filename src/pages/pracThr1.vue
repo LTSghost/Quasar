@@ -1,34 +1,70 @@
 <template>
   <q-page class="flex flex-center q-pt-lg">
     <q-table
-      :grid="isGrid"
-      title="Treats"
-      :rows="rows"
-      :columns="columns"
-      row-key="userId"
-      :filter="filter"
-      hide-header
+      title="LTS table"
+      :rows="LTSrow"
+      :columns="[
+        {
+          name:'expand',
+          label:'Expand',
+          algin:'center'
+        }
+        ,
+        {
+          name:'id',
+          label:'Identification',
+          field: row => `ID: ${row.id}`,
+          align:'center',
+          sortable:true,
+          classes:'bg-red',
+          style:'border-bottom:2px solid yellow',
+          headerClasses: 'bg-grey-7 text-white',
+          headerStyle: 'font-size: 1.2em'
+        },
+        {
+          name:'name',
+          label:'Name',
+          field: row => `ID: ${row.name}`,
+          align:'center',
+          sortable:true,
+          classes:'bg-red',
+        },
+        {
+          name:'email',
+          label:'Email'
+        }
+        ]"
+        row-key="id"
+        separator="cell"
+        :pagination="
+        {
+          sortBy:'name',
+          rowsPerPage: 2
+        }
+        "
+        :rows-per-page-options="[1,2,5]"
     >
-      <template v-slot:top-right>
-        <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
-          <template v-slot:append>
-            <q-icon name="search" />
-          </template>
-        </q-input>
-      </template>
+    <!-- <template #body="props">
+      <q-tr :props="props">
+        <pre>{{ props }}</pre>
+        <q-td :props="props" key="name">
+          <q-btn>{{ props.row.name }}</q-btn>
+          {{ props.row.name }}
+        </q-td>
+        <q-td  key="email">
+          {{ props.row.email }}
+        </q-td>
+      </q-tr>
+    </template> -->
+
+    <template #body-cell-email="props">
+      <q-td>
+        <q-btn>{{ props.row.email }}</q-btn>
+      </q-td>
+
+    </template>
+
     </q-table>
-
-    <q-btn
-    flat
-    round
-    dense
-    :icon="isGrid ? 'list' : 'grid_on'"
-    @click="isGrid = !isGrid"
-    >
-    <q-tooltip>{{grid ? "Grid" : "List"}}</q-tooltip>
-    </q-btn>
-
-
   </q-page>
 </template>
 
@@ -36,28 +72,6 @@
 import { exportFile, Loading, useQuasar } from 'quasar'
 import { ref, onMounted, reactive, computed} from 'vue'
 import axios from 'axios'
-
-const filter = ref('')
-const isGrid = ref('false')
-
-const columns = ref([
-  {
-    userId: 'userId',
-    required: true,
-    label: '用戶編號',
-    align: 'left',
-    field: row => row.userId,
-    format: val => `${val}`,
-    sortable: true
-  },
-  { userId: 'id', align: 'left', label: '編號', field: 'id', sortable: true },
-  { userId: 'title', align: 'center', label: '名稱', field: 'title', sortable: true },
-  // { name: 'carbs', label: 'Carbs (g)', field: 'carbs' },
-  // { name: 'protein', label: 'Protein (g)', field: 'protein' },
-  // { name: 'sodium', label: 'Sodium (mg)', field: 'sodium' },
-  // { name: 'calcium', label: 'Calcium (%)', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) },
-  // { name: 'iron', label: 'Iron (%)', field: 'iron', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
-])
 
 const rows = ref([
   {
@@ -74,29 +88,70 @@ const rows = ref([
   },
   {
     name: 'Eclair',
-    calories: 262,
-    fat: 16.0,
+    id: 262,
+    title: 16.0,
     body: "SO ECLAIR"
   },
   {
     name: 'Cupcake',
-    calories: 305,
-    fat: 3.7,
+    id: 305,
+    title: 3.7,
     body: "SO CUP"
   },
   {
     name: 'LTS',
-    calories: 1000,
-    fat: 10,
+    id: 1000,
+    title: 10,
     body: "SO LTS"
   },
   {
     name: 'RAN',
-    calories: 999,
-    fat: 9,
+    id: 999,
+    title: 9,
     body: "SO RAN"
   }
 ])
+
+const LTSrow = ref(
+  [
+      {
+        id:1,
+        name:'LTS',
+        email:'LTS@gmail.com'
+      },
+      {
+        id:2,
+        name:'LTS2',
+        email:'LTS2 @gmail.com'
+      },
+      {
+        id:3,
+        name:'aTS3',
+        email:'LTS3@gmail.com'
+      },
+      {
+        id:4,
+        name:'LTS4',
+        email:'LTS4@gmail.com'
+      },
+      {
+        id:5,
+        name:'LTS5',
+        email:'LTS5@gmail.com'
+      },
+      {
+        id:6,
+        name:'LTS6',
+        email:'LTS6@gmail.com'
+      },
+      ]
+)
+// const LTScol = ref([
+//   {
+//     name:id,
+//     label:'Identification'
+//   }
+// ])
 
 const rows2 = ref([
   {

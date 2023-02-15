@@ -8,26 +8,12 @@
       :filter="filter"
       :pagination="pagination"
       separator="cell"
-      row-key="name">
+      row-key="name"
+      :rows-per-page-options="[1,2,5,10]">
 
       <template v-slot:top-right="props">
 
         <q-btn class="q-mr-sm" color="primary" label="新增" @click="addDialog" />
-
-        <!-- <q-input class="q-mr-sm" outlined bottom-slots v-model="text" label="search" :dense="dense">
-        <template v-slot:append>
-          <q-icon v-if="text !== ''" name="close" @click="text = ''" class="cursor-pointer" />
-          <q-icon name="search" />
-        </template>
-        </q-input> -->
-
-        <!-- <q-input  dense standout v-model="text" label="search"  class="q-mr-sm">
-          <template v-slot:append>
-            <q-icon v-if="text === ''" name="search" />
-            <q-icon v-else name="clear" class="cursor-pointer" @click="text = ''" />
-          </template>
-        </q-input> -->
-
 
         <!-- filter input -->
         <q-input
@@ -71,18 +57,6 @@
         />
       </template>
 
-      <!-- <template v-slot:header="props">
-        <q-tr :props="props">
-          <q-th>{{ props.cols[0].label }}</q-th>
-          <q-th>{{ props.cols[1].label }}</q-th>
-          <q-th>{{ props.cols[2].label }}</q-th>
-          <q-th>{{ props.cols[3].label }}</q-th>
-          <q-th>{{ props.cols[4].label }}</q-th>
-          <q-th>{{ props.cols[5].label }}</q-th>
-          <q-th>{{ props.cols[6].label }}</q-th>
-        </q-tr>
-      </template> -->
-
       <template v-slot:body="props">
         <q-tr :props="props">
           <q-td key="item_no" :props="props">
@@ -113,35 +87,19 @@
           </q-td>
           <q-td key="calcium" :props="props">
             <q-btn dense color="blue" @click="editDialog(props)" icon="edit"></q-btn>
-            <q-btn dense color="red" @click="deleteRow(props)" icon="delete" class="q-ml-sm"></q-btn>
-            <!-- <q-btn dense round flat color="grey" @click="deleteOrNot(props)" icon="delete"></q-btn> -->
+            <!-- <q-btn dense color="red" @click="deleteRow(props.row)" icon="delete" class="q-ml-sm"></q-btn> -->
+            <q-btn dense color="red" @click="deleteOrNot(props)" icon="delete" class="q-ml-sm"></q-btn>
           </q-td>
         </q-tr>
       </template>
 
     </q-table>
 
-    <!-- <q-table
-    title="Simple"
-    :rows="data"
-    :columns="columns"
-    row-key="name"
-    dense>
-    <template v-slot:body-cell-actions="props">
-      <q-td :props="props">
-        <q-btn dense round flat color="grey" @click="editRow(props)" icon="edit"></q-btn>
-        <q-btn dense round flat color="grey" @click="deleteRow(props)" icon="delete"></q-btn>
-      </q-td>          
-    </template>
-    </q-table> -->
-
     <!-- addDialog -->
     <q-dialog v-model="addForm.isEdit">
       <q-card class="q-pa-lg" style="max-width: 500px; width: 100%">
         <h5 class="text-center text-bold q-mb-lg">新增資料</h5>
-        <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset">
-          <!-- <div class="form">
-          </div> -->
+        <form @submit.prevent.stop="onSubmitAdd" @reset.prevent.stop="onReset">
           <div class="row q-col-gutter-md">
             <div class="col-12">
               <q-input
@@ -314,10 +272,13 @@
         <q-card-section class="q-pt-none">
           確認刪除 {{ item_name }}
         </q-card-section>
+        <!-- <q-card-section>
+          idx {{ item_index }}
+        </q-card-section> -->
 
         <q-card-actions align="right" class="text-primary">
           <q-btn flat label="取消" v-close-popup />
-          <q-btn flat label="確認" @click="delConform()" />
+          <q-btn flat label="確認" @click="deleteRow(delete_index)" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -328,7 +289,7 @@
 
 <script setup>
 import { exportFile, Loading, useQuasar } from 'quasar'
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import json from '../assets/Practice2_Data.json'
 
 // console.log(json[0]['item_no'])
@@ -348,11 +309,9 @@ const itemNoRules = [
 ]
 
 const pagination = ref({
-      sortBy: 'desc',
+      sortBy: 'name',
       descending: false,
-      page: 1,
-      rowsPerPage: 10,
-      rowsNumber: 8
+      rowsPerPage: 5
     })
 
 const columns = [
@@ -366,117 +325,14 @@ const columns = [
     sortable: true
   },
   { name: 'item_name', align: 'center', label: '商品名稱', field: row => row.item_name, sortable: true },
-  { name: 'price', label: '價格', field: 'price', sortable: true },
-  { name: 'eff_date_from', label: '適用開始日', field: 'eff_date_from' },
-  { name: 'eff_date_to', label: '適用結束日', field: 'eff_date_to' },
-  { name: 'tax', label: '稅別', field: 'tax' },
-  { name: 'calcium', label: '操作', field: 'calcium', sortable: true, sort: (a, b) => parseInt(a, 10) - parseInt(b, 10) }
+  { name: 'price', label: '價格', field: 'price',align:'center', sortable: true },
+  { name: 'eff_date_from', label: '適用開始日', field: 'eff_date_from',align:'center',sortable: true },
+  { name: 'eff_date_to', label: '適用結束日', field: 'eff_date_to',align:'center',sortable: true },
+  { name: 'tax', label: '稅別', field: 'tax',align:'center',sortable: true },
+  { name: 'calcium', label: '操作', field: 'calcium',align:'center'}
 ]
 
-const rows = json
-
-// const rows = [
-//   {
-//     item_no: 'Frozen Yogurt',
-//     calories: 159,
-//     fat: 6.0,
-//     carbs: 24,
-//     protein: 4.0,
-//     sodium: 87,
-//     calcium: '14%',
-//     iron: '1%'
-//   },
-//   {
-//     name: 'Ice cream sandwich',
-//     calories: 237,
-//     fat: 9.0,
-//     carbs: 37,
-//     protein: 4.3,
-//     sodium: 129,
-//     calcium: '8%',
-//     iron: '1%'
-//   },
-//   {
-//     name: 'Eclair',
-//     calories: 262,
-//     fat: 16.0,
-//     carbs: 23,
-//     protein: 6.0,
-//     sodium: 337,
-//     calcium: '6%',
-//     iron: '7%'
-//   },
-//   {
-//     name: 'Cupcake',
-//     calories: 305,
-//     fat: 3.7,
-//     carbs: 67,
-//     protein: 4.3,
-//     sodium: 413,
-//     calcium: '3%',
-//     iron: '8%'
-//   },
-//   {
-//     name: 'Gingerbread',
-//     calories: 356,
-//     fat: 16.0,
-//     carbs: 49,
-//     protein: 3.9,
-//     sodium: 327,
-//     calcium: '7%',
-//     iron: '16%'
-//   },
-//   {
-//     name: 'Jelly bean',
-//     calories: 375,
-//     fat: 0.0,
-//     carbs: 94,
-//     protein: 0.0,
-//     sodium: 50,
-//     calcium: '0%',
-//     iron: '0%'
-//   },
-//   {
-//     name: 'Lollipop',
-//     calories: 392,
-//     fat: 0.2,
-//     carbs: 98,
-//     protein: 0,
-//     sodium: 38,
-//     calcium: '0%',
-//     iron: '2%'
-//   },
-//   {
-//     name: 'Honeycomb',
-//     calories: 408,
-//     fat: 3.2,
-//     carbs: 87,
-//     protein: 6.5,
-//     sodium: 562,
-//     calcium: '0%',
-//     iron: '45%'
-//   },
-//   {
-//     name: 'Donut',
-//     calories: 452,
-//     fat: 25.0,
-//     carbs: 51,
-//     protein: 4.9,
-//     sodium: 326,
-//     calcium: '2%',
-//     iron: '22%'
-//   },
-//   {
-//     name: 'KitKat',
-//     calories: 518,
-//     fat: 26.0,
-//     carbs: 65,
-//     protein: 7,
-//     sodium: 54,
-//     calcium: '12%',
-//     iron: '6%'
-//   }
-// ]
+const rows = ref(json)
 
 // dialog
 const addForm = ref({
@@ -505,7 +361,8 @@ const editForm = ref({
   },
   isEdit: false
 })
-const delForm = ref(false)
+
+
 
 const startDate = ref("年/月/日")
 const startDateRef = ref(null)
@@ -515,55 +372,24 @@ const taxType = ref("")
 const taxTypeRef = ref(null)
 const taxOpt = ["应税","免税","零税"]
 
-const onSubmit = () => {
+const onSubmitAdd = () => {
   console.log("submit")
   item_Ref.value.validate()
 }
 
-const item_name = ref("")
+// delete dialog state
+const delForm = ref(false)
+const delete_name = ref("")
+const delete_index = ref("")
+
 const deleteOrNot = (props) => {
   delForm.value = true
-  item_name.value = props.row["item_name"]
-
-  if (delTrue.value == true) {
-    deleteRow(props)
-  }
-
+  delete_name.value = props.row["item_name"]
+  delete_index.value = rows.value.indexOf(props.row)
 }
-const delTrue = ref(false)
-const delConform = () => {
-  // delTrue.value = true
-  item_name.value = "哭阿"
-}
-
-const selected = []
-const deleteRow = (props) => {
-  var index = rows.indexOf(props.row)
-
-  rows.splice(index,1)
-
-  console.log(rows)
-
-  nothingDialog()
-
-  // pagination.value.rowsNumber = 
-  // console.log(rows[0])
-  // rows.splice(rows.indexOf(0), 1);
-  // console.log(rows)
-
-    //   let self = this;
-    //   this.selected.filter(function(item){
-    //     self.data.splice(self.data.indexOf(item), 1);
-    //     return item;
-    //   });
-    //   this.selected = [];
-    // },
-    // deleteval(index){
-    //   console.log(index)
-    //   this.data.splice(index, 1);
-
-    //   console.log(this.data)
-    // }
+// conform delete row
+const deleteRow = (delete_index) => {
+  rows.value.splice(delete_index,1)
 }
 
 const addDialog = () => {
@@ -572,13 +398,13 @@ const addDialog = () => {
 const handleAdd = () => {
   // key ['item_no','item_name'...]
   // console.log(addForm.value.model[key])
-  rows.push({
-  "item_no": addForm.value.model["item_no"],
-  "item_name": addForm.value.model["item_name"],
-  "price": addForm.value.model["price"],
-  "eff_date_from": addForm.value.model["eff_date_from"],
-  "eff_date_to": addForm.value.model["eff_date_to"],
-  "tax": addForm.value.model["tax"]
+  rows.value.push({
+    "item_no": addForm.value.model["item_no"],
+    "item_name": addForm.value.model["item_name"],
+    "price": addForm.value.model["price"],
+    "eff_date_from": addForm.value.model["eff_date_from"],
+    "eff_date_to": addForm.value.model["eff_date_to"],
+    "tax": addForm.value.model["tax"]
   })
 
   addForm.value.model["item_no"] = null
@@ -587,6 +413,7 @@ const handleAdd = () => {
   addForm.value.model["eff_date_from"] = null
   addForm.value.model["eff_date_to"] = null
   addForm.value.model["tax"] = null
+
 }
 
 const editDialog = (props) => {
@@ -615,10 +442,6 @@ const handleEdit = () => {
   // console.log(editForm.value.data.row['item_no'] = 10)
 }
 
-const nothingDialog = () => {
-  addForm.value.isEdit = true
-  addForm.value.isEdit = false
-}
 
 function wrapCsvValue (val, formatFn, row) {
   let formatted = formatFn !== void 0
@@ -645,7 +468,7 @@ const $q = useQuasar()
 const exportTable = () => {
   // naive encoding to csv format
   const content = [columns.map(col => wrapCsvValue(col.label))].concat(
-    rows.map(row => columns.map(col => wrapCsvValue(
+    rows.value.map(row => columns.map(col => wrapCsvValue(
       typeof col.field === 'function'
         ? col.field(row)
         : row[ col.field === void 0 ? col.name : col.field ],
