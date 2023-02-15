@@ -81,7 +81,7 @@
             <q-badge v-else-if="props.row.tax === '免税'" color="orange">
               {{ props.row.tax }}
             </q-badge>
-            <q-badge v-else color="cyan">
+            <q-badge v-else color="secondary">
               {{ props.row.tax }}
             </q-badge>
           </q-td>
@@ -99,86 +99,109 @@
     <q-dialog v-model="addForm.isEdit">
       <q-card class="q-pa-lg" style="max-width: 500px; width: 100%">
         <h5 class="text-center text-bold q-mb-lg">新增資料</h5>
-        <form @submit.prevent.stop="onSubmitAdd" @reset.prevent.stop="onReset">
-          <div class="row q-col-gutter-md">
-            <div class="col-12">
-              <q-input
-              outlined 
-              label="商品代號 *" 
-              stack-label
-              :rules="itemNoRules"
-              v-model="addForm.model.item_no"
-              >
-              </q-input>
-            </div>
-            <div class="col-12">
-              <q-input label="商品名稱 *" stack-label outlined v-model="addForm.model.item_name"></q-input>
-            </div>
-            <div class="col-12">
-              <q-input label="價格 *" stack-label outlined v-model="addForm.model.price"></q-input>
-            </div>
-            <div class="col-12"> 
-            <q-input
-            ref="startDateRef"
-            outlined 
-            lazy-rules
-            label="適用開始日"
-            v-model="addForm.model.eff_date_from"
-            :rules="['date']">
-              <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-date v-model="date">
-                      <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Close" color="primary" flat />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
-            </div>
+        <div>
+          <q-form
+            @submit.prevent.stop="onSubmitAdd"
+            class="q-gutter-md"
+          >
+            <!-- <div class="row q-col-gutter-md"> -->
+                <div class="col-12">
+                  <q-input
+                  outlined 
+                  label="商品代號 *" 
+                  stack-label
+                  :rules="itemNoRules"
+                  v-model="addForm.model.item_no"
+                  >
+                  </q-input>
+                </div>
+                <div class="col-12">
+                  <q-input label="商品名稱 *" 
+                  stack-label 
+                  outlined
+                  :rules="[val => !!val || '商品名稱不能為空']"
+                  v-model="addForm.model.item_name"
+                  ></q-input>
+                </div>
+                <div class="col-12">
+                  <q-input label="價格 *" 
+                  stack-label 
+                  outlined 
+                  v-model="addForm.model.price" 
+                  :rules="[val => !!val || '商品價格不能為空',val => val >= 0 || '商品價格不能為負值']"
+                  ></q-input>
+                </div>
+                <div class="col-12"> 
+                <q-input
+                ref="startDateRef"
+                outlined 
+                lazy-rules
+                label="適用開始日"
+                stack-label=""
+                placeholder="年/月/日"
+                v-model="addForm.model.eff_date_from"
+                :rules="[(val) => !!val || '請輸入適用開始日',]">
+                  <template v-slot:append>
+                    <q-icon name="event" class="cursor-pointer">
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="addForm.model.eff_date_from">
+                          <div class="row items-center justify-end">
+                            <q-btn v-close-popup label="Close" color="primary" flat />
+                          </div>
+                        </q-date>
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
+                </div>
 
-            <div class="col-12"> 
-            <q-input
-            ref="endDateRef"
-            outlined 
-            lazy-rules
-            label="適用結束日 *"
-            v-model="addForm.model.eff_date_to"
-            :rules="['date']">
-              <template v-slot:append>
-                <q-icon name="event" class="cursor-pointer">
-                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                    <q-date v-model="date">
-                      <div class="row items-center justify-end">
-                        <q-btn v-close-popup label="Close" color="primary" flat />
-                      </div>
-                    </q-date>
-                  </q-popup-proxy>
-                </q-icon>
-              </template>
-            </q-input>
-            </div>
+                <div class="col-12"> 
+                <q-input
+                ref="endDateRef"
+                outlined 
+                lazy-rules
+                label="適用結束日 *"
+                stack-label=""
+                placeholder="年/月/日"
+                v-model="addForm.model.eff_date_to"
+                :rules="[(val) => !!val || '請輸入適用結束日']">
+                  <template v-slot:append>
+                    <q-icon name="event" class="cursor-pointer">
+                      <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                        <q-date v-model="addForm.model.eff_date_to">
+                          <div class="row items-center justify-end">
+                            <q-btn v-close-popup label="Close" color="primary" flat />
+                          </div>
+                        </q-date>
+                      </q-popup-proxy>
+                    </q-icon>
+                  </template>
+                </q-input>
+                </div>
 
-            <div class="col-12"> 
-            <q-select
-            ref="taxTypeRef"
-            filled
-            lazy-rules
-            v-model="addForm.model.tax" 
-            :options="taxOpt"
-            label="稅別 *"
-            :rules="[val => !!val || '請選擇稅別']"/>
-           </div>
-            <div class="col-6">
-              <q-btn v-close-popup unelevated color="primary" class="full-width" label="保存" @click="handleAdd"></q-btn>
+                <div class="col-12"> 
+                <q-select
+                ref="taxTypeRef"
+                filled
+                lazy-rules
+                v-model="addForm.model.tax" 
+                :options="taxOpt"
+                label="稅別 *"
+                :rules="[val => !!val || '請選擇稅別']"/>
+              </div>
+            <!-- </div> -->
+            <!-- <div class="col-6">
+              <q-btn v-close-popup unelevated color="primary" class="full-width" label="新增" @click="handleAdd"></q-btn>
             </div>
             <div class="col-6">
               <q-btn v-close-popup unelevated color="grey-7" class="full-width" label="取消"></q-btn>
+            </div> -->
+            <div align="right">
+              <q-btn label="新增" type="submit" color="primary"/>
+              <q-btn v-close-popup label="取消" type="reset" color="primary" flat class="q-ml-sm" />
             </div>
-          </div>
-        </form>
+          </q-form>
+        </div>
       </q-card>
     </q-dialog>
 
@@ -186,9 +209,7 @@
     <q-dialog v-model="editForm.isEdit">
       <q-card class="q-pa-lg" style="max-width: 500px; width: 100%">
           <h5 class="text-center text-bold q-mb-lg">新增資料</h5>
-          <div class="form">
-          </div>
-          <div class="row q-col-gutter-md">
+          <!-- <div class="row q-col-gutter-md">
             <div class="col-12">
               <q-input label="商品代號 *" readonly stack-label outlined v-model="editForm.model.item_no"></q-input>
             </div>
@@ -258,8 +279,93 @@
             <div class="col-6">
               <q-btn v-close-popup unelevated color="grey-7" class="full-width" label="取消"></q-btn>
             </div>
+          </div> -->
+          <q-form
+            @submit="onSubmitEdit"
+            class="q-gutter-md"
+          >
+          <div class="row q-col-gutter-md">
+            <div class="col-12">
+              <q-input label="商品代號 *" readonly stack-label outlined v-model="editForm.model.item_no"></q-input>
+            </div>
+            <div class="col-12">
+              <q-input label="商品名稱 *" stack-label outlined v-model="editForm.model.item_name"></q-input>
+            </div>
+            <div class="col-12">
+              <q-input label="價格 *" 
+              stack-label 
+              outlined 
+              v-model="editForm.model.price"
+              :rules="[val => !!val || '商品價格不能為空',val => val >= 0 || '商品價格不能為負值']"
+              ></q-input>
+            </div>
+            <div class="col-12"> 
+            <q-input
+            ref="startDateRef"
+            outlined 
+            lazy-rules
+            label="適用開始日"
+            v-model="editForm.model.eff_date_from"
+            :rules="[(val) => !!val || '請輸入適用開始日',]">
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="editForm.model.eff_date_from">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+            </div>
+
+            <div class="col-12"> 
+            <q-input
+            ref="endDateRef"
+            outlined 
+            lazy-rules
+            label="適用結束日 *"
+            v-model="editForm.model.eff_date_to"
+            :rules="[(val) => !!val || '請輸入適用結束日',]">
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="editForm.model.eff_date_to">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+            </div>
+
+            <div class="col-12"> 
+            <q-select
+            ref="taxTypeRef"
+            filled
+            lazy-rules
+            v-model="editForm.model.tax" 
+            :options="taxOpt"
+            label="稅別 *"
+            :rules="[val => !!val || '請選擇稅別']"/>
+           </div>
+            <!-- <div class="col-6">
+              <q-btn v-close-popup unelevated color="primary" class="full-width" label="保存" @click="handleEdit"></q-btn>
+            </div>
+            <div class="col-6">
+              <q-btn v-close-popup unelevated color="grey-7" class="full-width" label="取消"></q-btn>
+            </div> -->
           </div>
-      </q-card>
+            <div>
+              <q-btn label="保存" type="submit" color="primary"/>
+              <q-btn v-close-popup label="取消" type="reset" color="primary" flat class="q-ml-sm" />
+            </div>
+          </q-form>
+        </q-card>
     </q-dialog>
 
     <!-- deleteDialog -->
@@ -302,10 +408,14 @@ import json from '../assets/Practice2_Data.json'
 
 const filter = ref('')
 const isGrid = ref(false)
+const rows = ref(json)
+
+console.log(rows.value[0]);
 
 const itemNoRules = [
   val => !!val || '請輸入商品代號',
-  val => (/^[0-9]+/.test(val)) || "請輸入數字"
+  val => (/^[0-9]+/.test(val)) || "請輸入數字",
+  val => !allRowNo.includes(val) || "商品代碼已重複"
 ]
 
 const pagination = ref({
@@ -331,8 +441,6 @@ const columns = [
   { name: 'tax', label: '稅別', field: 'tax',align:'center',sortable: true },
   { name: 'calcium', label: '操作', field: 'calcium',align:'center'}
 ]
-
-const rows = ref(json)
 
 // dialog
 const addForm = ref({
@@ -372,11 +480,6 @@ const taxType = ref("")
 const taxTypeRef = ref(null)
 const taxOpt = ["应税","免税","零税"]
 
-const onSubmitAdd = () => {
-  console.log("submit")
-  item_Ref.value.validate()
-}
-
 // delete dialog state
 const delForm = ref(false)
 const delete_name = ref("")
@@ -392,7 +495,24 @@ const deleteRow = (delete_index) => {
   rows.value.splice(delete_index,1)
 }
 
+
+var allRowNo = []
 const addDialog = () => {
+  addForm.value.model["item_no"] = null
+  addForm.value.model["item_name"] = null
+  addForm.value.model["price"] = null
+  addForm.value.model["eff_date_from"] = null
+  addForm.value.model["eff_date_to"] = null
+  addForm.value.model["tax"] = null
+
+  allRowNo = []
+
+  // create recent all rows item_no in an array
+  for (let i = 0; i < rows.value.length; i++) {
+    allRowNo.push(rows.value[i]['item_no'])
+  }
+  console.log(allRowNo);
+
   addForm.value.isEdit = true
 }
 const handleAdd = () => {
@@ -414,6 +534,29 @@ const handleAdd = () => {
   addForm.value.model["eff_date_to"] = null
   addForm.value.model["tax"] = null
 
+}
+const onSubmitAdd = () => {
+  console.log("submitAdd")
+
+    // key ['item_no','item_name'...]
+  // console.log(addForm.value.model[key])
+  rows.value.push({
+    "item_no": addForm.value.model["item_no"],
+    "item_name": addForm.value.model["item_name"],
+    "price": addForm.value.model["price"],
+    "eff_date_from": addForm.value.model["eff_date_from"].replaceAll('/','-'),
+    "eff_date_to": addForm.value.model["eff_date_to"].replaceAll('/','-'),
+    "tax": addForm.value.model["tax"]
+  })
+
+  addForm.value.model["item_no"] = null
+  addForm.value.model["item_name"] = null
+  addForm.value.model["price"] = null
+  addForm.value.model["eff_date_from"] = null
+  addForm.value.model["eff_date_to"] = null
+  addForm.value.model["tax"] = null
+
+  addForm.value.isEdit = false
 }
 
 const editDialog = (props) => {
@@ -440,6 +583,15 @@ const handleEdit = () => {
   }
   
   // console.log(editForm.value.data.row['item_no'] = 10)
+}
+const onSubmitEdit = () => {
+  // console.log(editForm.value.model)
+  // key ['item_no','item_name'...]
+  for (let key in editForm.value.model) {
+    editForm.value.data.row[key] = editForm.value.model[key]
+    editForm.value.model[key] = null
+  }
+  editForm.value.isEdit = false
 }
 
 
