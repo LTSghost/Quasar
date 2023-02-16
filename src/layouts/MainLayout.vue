@@ -93,10 +93,10 @@ const linksList = [
     link: '/prac3'
   },
   {
-    title: 'test4',
+    title: 'test',
     caption: 'test',
     icon: 'quiz',
-    link: '/prac4'
+    link: '/test'
   },
   {
     title: 'Sol1',

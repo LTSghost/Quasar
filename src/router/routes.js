@@ -39,7 +39,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
     children: [
-      { path: 'prac4', component: () => import('pages/pracThr1.vue') }
+      { path: 'test', component: () => import('src/pages/pracTest.vue') }
     ]
   },
   {

@@ -65,13 +65,158 @@
     </template>
 
     </q-table>
+
+
+    <div class="row">
+      <div class="q-pa-md" style="max-width: 350px;">
+        <q-list bordered class="rounded-borders" style="width:300px">
+          <q-expansion-item
+            expand-separator
+            default-opened
+            icon="email"
+            label="Inbox"
+            caption="Inbox caption"
+            :duration="500"
+            style="background-color:#009688; color: white;"
+            expand-icon-class="text-white"
+          >
+            <q-separator color="white"/>
+            <q-expansion-item
+              header-inset-level="0.5"
+              expand-separator
+              expand-icon="1"
+              icon="receipt"
+              label="Receipts"
+              style="background-color: #00bcd4; color: white;"
+            />
+            <q-separator color="white"/>
+            <q-expansion-item
+              header-inset-level="0.5"
+              expand-separator
+              expand-icon="1"
+              icon="schedule"
+              label="Postpond"
+              style="background-color: #00bcd4; color: white;"
+            />
+          </q-expansion-item>
+
+
+          <!-- expan-Test -->
+          <q-expansion-item
+            expand-separator
+            default-opened
+            :icon="ThirdTimePrac2Json[0]['ICON']"
+            :label="ThirdTimePrac2Json[0]['MENU_NAME']"
+            :duration="500"
+            style="background-color:#009688; color: white;"
+            expand-icon-class="text-white"
+            group="groupA"
+          >
+            <q-separator color="white"/>
+
+          <div v-for="(item, key) in ThirdTimePrac2Json[0]['children']" :key="key" >
+            <div v-if="!item['children']">
+              <q-expansion-item 
+              :header-inset-level="initLevel"
+              :icon="item['ICON']"
+              :label="item['MENU_NAME']"
+              :to="item['PAGE']"
+              expand-icon="1"
+              style="background-color: #00bcd4; color: white;"
+              expand-icon-class="text-white"
+              />
+            </div>
+            <div v-else>
+              <q-expansion-item
+                expand-separator
+                :header-inset-level="initLevel"
+                :icon="item['ICON']"
+                :label="item['MENU_NAME']"
+                style="background-color: #00bcd4; color: white;"
+                expand-icon-class="text-white"
+                group="my-menu-group"
+              >
+                <my-q-menu-item
+                  :ThirdTimePrac2Json="item['children']"
+                  :init-level="initLevel + 0.3" 
+                />
+              </q-expansion-item>
+              <q-separator dark />
+            </div>
+          </div>
+
+          </q-expansion-item>
+
+          <!-- expan-Prac -->
+          <q-expansion-item
+            expand-separator
+            default-opened
+            :icon="ThirdTimePrac2Json[1]['ICON']"
+            :label="ThirdTimePrac2Json[1]['MENU_NAME']"
+            :duration="500"
+            style="background-color:#009688; color: white;"
+            expand-icon-class="text-white"
+            group="groupA"
+          >
+            <q-separator color="white"/>
+
+          <div v-for="(item, key) in ThirdTimePrac2Json[1]['children']" :key="key" >
+              <q-expansion-item 
+              expand-separator
+              :header-inset-level="0.5"
+              :icon="item['ICON']"
+              :label="item['MENU_NAME']"
+              :to="item['PATH']"
+              expand-icon="1"
+              style="background-color: #00bcd4; color: white;"
+              expand-icon-class="text-white"
+              />            
+          </div>
+          </q-expansion-item>
+
+        </q-list>
+        
+        <q-expansion-item
+          class="shadow-1 overflow-hidden"
+          style="border-radius: 30px"
+          icon="explore"
+          label="Counter"
+          @show="startCounting"
+          @hide="stopCounting"
+          header-class="bg-primary text-white"
+          expand-icon-class="text-white"
+        >
+          <q-card>
+            <q-card-section>
+              Counting: <q-badge color="secondary">{{ counter }}</q-badge>.
+              Will only count when opened, using the show/hide events to control count timer.
+            </q-card-section>
+          </q-card>
+        </q-expansion-item>
+      </div>
+    </div>
+
   </q-page>
+
+
+  
 </template>
 
 <script setup>
 import { exportFile, Loading, useQuasar } from 'quasar'
 import { ref, onMounted, reactive, computed} from 'vue'
 import axios from 'axios'
+import json from 'assets/Vue3ThirdTimePrac2.json'
+import json2 from 'assets/Vue3ThirdTimePrac2.txt'
+
+const initLevel = ref(0)
+
+const ThirdTimePrac2Json = reactive(json)
+console.log(ThirdTimePrac2Json[0])
+console.log(ThirdTimePrac2Json[1])
+
+const ThirdTimePrac2Txt = ref(json2)
+console.log(ThirdTimePrac2Txt.value[0])
 
 const rows = ref([
   {

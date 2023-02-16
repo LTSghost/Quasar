@@ -163,10 +163,12 @@
 </template>
 
 <script setup>
-import { useQuasar } from 'quasar'
+import { useQuasar, Loading } from 'quasar'
+import { useRouter } from 'vue-router'
 import { ref } from 'vue';
 
 const $q = useQuasar()
+const router = useRouter()
 
 const toggleValue = ref(false)
 const isPwd = ref(true)
@@ -295,6 +297,16 @@ const onSubmit = () => {
       color: 'positive',
       message: 'Submitted'
     })
+    Loading.show({
+          message: 'Some important process  is in progress. Hang on...'
+    })
+
+    setTimeout(() => {
+      Loading.hide()
+      router.push({ path: '/' })
+    }, 3000);
+
+    
   }
 }
 const onReset = () => {
