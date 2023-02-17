@@ -21,6 +21,13 @@ const routes = [
       { path: 'prac1', component: () => import('pages/pracOne.vue') }
     ]
   },
+    {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'prac1_result', component: () => import('pages/pracOne_result.vue') }
+    ]
+  },
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
@@ -61,6 +68,48 @@ const routes = [
     component: () => import('layouts/MainLayout.vue'),
     children: [
       { path: 'Sol3', component: () => import('pages/PracticeSol3.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: "pages/Practice1.vue", component: () => import('pages/pracOne.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'pages/Practice2.vue', component: () => import('pages/pracTwo.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'pages/Practice3.vue', component: () => import('pages/pracThr.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'pages/Practice4.vue', component: () => import('pages/pracFour.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'pages/Test1.vue', component: () => import('components/IsTest.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'pages/Test2.vue', component: () => import('pages/pracTest.vue') }
     ]
   },
   

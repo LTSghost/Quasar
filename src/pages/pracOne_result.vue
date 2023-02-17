@@ -7,6 +7,7 @@
       <!-- account -->
         <div class="col q-pl-xl q-pt-xl q-pr-sm q-pb-xs">
           <q-input
+          disable
           ref="accountRef"
           filled
           lazy-rules
@@ -22,6 +23,7 @@
         <!-- pwd -->
         <div class="col q-pl-sm q-pt-xl q-pr-xl q-pb-xs">
           <q-input
+          disable
           ref="pwdRef"
           filled
           lazy-rules
@@ -43,6 +45,7 @@
         <!-- school -->
         <div class="col q-pl-xl q-pt-xs q-pr-sm q-pb-xs"> 
           <q-select
+          disable
           ref="schoolRef"
           filled
           lazy-rules
@@ -65,6 +68,7 @@
         <!-- graduate_date -->
         <div class="col q-pl-sm q-pt-xs q-pr-xl q-pb-xs"> 
           <q-input
+          disable
           ref="gradDateRef"
           filled
           lazy-rules
@@ -93,6 +97,7 @@
         <!-- age -->
         <div class="col q-pl-xl q-pt-xs q-pr-sm q-pb-xs">
           <q-input
+          disable
           ref="ageRef"
           filled
           lazy-rules
@@ -109,6 +114,7 @@
         <!-- email -->
         <div class="col q-pl-sm q-pt-xs q-pr-xl q-pb-xs">
           <q-input
+          disable
           ref="emailRef"
           filled
           lazy-rules
@@ -131,6 +137,7 @@
         <!-- mobile -->
         <div class="col-6 q-pl-xl q-pt-xs q-pr-sm">
           <q-input
+          disable
           ref="mobileRef"
           filled
           lazy-rules
@@ -146,13 +153,14 @@
         </div>
     </div>
     <!-- login allowTerm -->
-    <div class="q-pa-md fit row wrap justify-center items-start content-start">
+    <!-- <div class="q-pa-md fit row wrap justify-center items-start content-start">
         <q-toggle font="text-weight-bold" label="我接受許可證和條款" v-model="toggleValue" color="blue" />
-      </div>
+      </div> -->
     <div class="q-pa-md fit row wrap justify-center items-start content-start">
       <div>
-        <q-btn color="primary" type="submit" label="提交"/>
-        <q-btn class="q-ml-sm" type="reset" color="white" text-color="blue" label="重置"/>
+        <!-- <q-btn color="primary" type="submit" label="提交"/> -->
+        <!-- <q-btn class="q-ml-sm" type="reset" color="white" text-color="blue" label="重置"/> -->
+        <q-btn color="primary" icon="replay" label="返回" @click="turnBack" />
       </div>
     </div>
       <!-- <div class="q-pt-lg">
@@ -163,10 +171,10 @@
 </template>
 
 <script setup>
-import { useQuasar, Loading } from 'quasar';
-import { useRouter } from 'vue-router';
-import { ref } from 'vue';
-import { useStore, updateAccount } from 'vuex';
+import { useQuasar, Loading } from 'quasar'
+import { useRouter } from 'vue-router'
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
 
 const $store = useStore()
 const $q = useQuasar()
@@ -177,6 +185,7 @@ const isPwd = ref(true)
 
 const account = ref("abcdef1234567890_")
 const accountRef = ref(null)
+account.value = $store.state.showcase.account
 
 const password = ref("a12345B")
 const pwdRef = ref(null)
@@ -272,6 +281,10 @@ const mobileRules = [
   val => (/^09[0-9]{8}$/.test(val)) || "手機號碼格式錯誤, ex: 09... 必須10位數字"
 ]
 
+const changedAccount = computed(()=>{
+  return $store.getters.getAccount
+})
+
 const onSubmit = () => {
   console.log("submit")
   accountRef.value.validate()
@@ -283,8 +296,7 @@ const onSubmit = () => {
   mobileRef.value.validate()
 
 
-  console.log($store.state.showcase.msg)
-  console.log($store.state.showcase.account)  
+  console.log(account.value,password.value);
 
   
 
@@ -307,18 +319,25 @@ const onSubmit = () => {
       message: 'Submitted'
     })
     Loading.show({
-          message: '提交過程中， 請等待...'
+          message: 'Some important process  is in progress. Hang on...'
     })
 
     setTimeout(() => {
       Loading.hide()
-      changeAccount()
-      console.log($store.state.showcase.account);
-      router.push({ path: '/prac1_result' })
+      // router.push({ path: '/' })
     }, 3000);
 
     
   }
+}
+const turnBack = () =>{
+  Loading.show({
+          message: 'Turning back'
+    })
+  setTimeout(() => {
+    Loading.hide()
+    router.push({ path: '/prac1' })
+  }, 500);
 }
 const onReset = () => {
   // form.value.account = ""
@@ -355,10 +374,6 @@ const submitLogin = () => {
   alert("login")
 }
 
-const changeAccount = () => {
-  $store.dispatch('updateAccount', {account: "abcde"})
-  $store.state.account
-}
 
 
 </script>

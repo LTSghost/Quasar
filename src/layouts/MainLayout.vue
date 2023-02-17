@@ -27,27 +27,62 @@
       <q-list>
         <q-item-label
           header
+          class="border"
         >
           Links
         </q-item-label>
+        <q-separator color="grey" />
+        
+        <q-expansion-item
+          expand-icon-class="text-black"
+          icon="link"
+          label="Original Links"
+          style=" color: black;"
+        >
 
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
+          <EssentialLink
+            v-for="link in essentialLinks"
+            :key="link.title"
+            v-bind="link"
+          />
+        </q-expansion-item>
+        <q-separator color="grey" />
+
+        <q-expansion-item
+        icon="code"
+          label="Exercise1"
+        >  
+          <EssentialLink
+              v-for="link in exercise1Links"
+              :key="link.title"
+              v-bind="link"
+            />
+        </q-expansion-item>
+        <q-separator color="grey" />
+
+        <q-expansion-item
+          default-opened
+          icon="code"
+          label="Exercise2"
+        >
+          <MyQitemExpansion/>
+        </q-expansion-item>
+        
       </q-list>
     </q-drawer>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+    
   </q-layout>
 </template>
 
 <script>
 import { defineComponent, ref } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
+import MyQitemExpansion from 'components/MyQitemExpansion.vue'
+import IsTest  from 'components/IsTest.vue'
 
 const linksList = [
   {
@@ -118,11 +153,21 @@ const linksList = [
   },
 ]
 
+const exercise1Links = []
+
+linksList.forEach(element => {
+  // console.log(element.link);
+  if (['/prac1','/prac2','/prac3'].includes(element.link)) {
+    exercise1Links.push(element)
+  }
+});
+
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
-    EssentialLink
+    EssentialLink,
+    MyQitemExpansion
   },
 
   setup () {
@@ -133,7 +178,8 @@ export default defineComponent({
       leftDrawerOpen,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      },
+      exercise1Links
     }
   }
 })

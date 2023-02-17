@@ -195,6 +195,8 @@
         </q-expansion-item>
       </div>
     </div>
+    <IsTest/>
+    
 
   </q-page>
 
@@ -205,6 +207,7 @@
 <script setup>
 import { exportFile, Loading, useQuasar } from 'quasar'
 import { ref, onMounted, reactive, computed} from 'vue'
+import IsTest from 'components/IsTest.vue'
 import axios from 'axios'
 import json from 'assets/Vue3ThirdTimePrac2.json'
 import json2 from 'assets/Vue3ThirdTimePrac2.txt'
