@@ -166,7 +166,7 @@
 import { useQuasar, Loading } from 'quasar';
 import { useRouter } from 'vue-router';
 import { ref } from 'vue';
-import { useStore, updateAccount } from 'vuex';
+import { useStore } from 'vuex';
 
 const $store = useStore()
 const $q = useQuasar()
@@ -177,6 +177,13 @@ const isPwd = ref(true)
 
 const account = ref("abcdef1234567890_")
 const accountRef = ref(null)
+account.value = $store.state.showcase.msg
+
+const accountChange = () => {
+    $store.dispatch('showcase/updateAccount', account.value)
+}
+
+
 
 const password = ref("a12345B")
 const pwdRef = ref(null)
@@ -312,10 +319,10 @@ const onSubmit = () => {
 
     setTimeout(() => {
       Loading.hide()
-      changeAccount()
+      accountChange()
       console.log($store.state.showcase.account);
       router.push({ path: '/prac1_result' })
-    }, 3000);
+    }, 500);
 
     
   }

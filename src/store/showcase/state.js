@@ -1,6 +1,6 @@
 export default function () {
   return {
-    msg:"hello msg from vuex",
+    msg:"helloIsMe",
     account:""
   }
 }

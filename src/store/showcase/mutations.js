@@ -2,6 +2,6 @@
 export function someMutation (state) {
 }
 */
-export function mutateAccount(state, value){
-    state.account = value;
+export function mutateAccount(state, status){
+    state.account = status;
 }

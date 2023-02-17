@@ -2,6 +2,6 @@
 export function someAction (context) {
 }
 */
-export function updateAccount(context, payload) {
-    context.commit('mutateAccount', payload.account)
+export function updateAccount(context, status) {
+    context.commit('mutateAccount', status)
 }
