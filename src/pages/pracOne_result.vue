@@ -73,7 +73,7 @@
           filled
           lazy-rules
           label="畢業日期 *"
-          v-model="date"
+          v-model="gradDate"
           placeholder="年/月/日"
           :rules="[(val) => !!val || '請輸入日期']"
           :error="form.gradDate.error"
@@ -81,7 +81,7 @@
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="date">
+                  <q-date v-model="gradDate">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="primary" flat />
                     </div>
@@ -183,26 +183,26 @@ const router = useRouter()
 const toggleValue = ref(false)
 const isPwd = ref(true)
 
-const account = ref("abcdef1234567890_")
+const account = ref($store.state.showcase.account)
 const accountRef = ref(null)
-account.value = $store.state.showcase.account
+// account.value = $store.state.showcase.account
 
-const password = ref("a12345B")
+const password = ref($store.state.showcase.password)
 const pwdRef = ref(null)
 
-const school = ref("")
+const school = ref($store.state.showcase.school)
 const schoolRef = ref(null)
 
-const gradDate = ref("")
+const gradDate = ref($store.state.showcase.gradDate)
 const gradDateRef = ref(null)
 
-const age = ref("18")
+const age = ref($store.state.showcase.age)
 const ageRef = ref(null)
 
-const email = ref("JohnnieCena.k.lll@gmail__132as.dff")
+const email = ref($store.state.showcase.email)
 const emailRef = ref(null)
 
-const mobile = ref("0989534292")
+const mobile = ref($store.state.showcase.mobile)
 const mobileRef = ref(null)
 
 const date = ref("")
@@ -344,7 +344,7 @@ const onReset = () => {
   account.value = ""
   password.value = ""
   school.value = ""
-  date.value = "年/月/日"
+  gradDate.value = "年/月/日"
   age.value = ""
   email.value = ""
   mobile.value = ""

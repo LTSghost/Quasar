@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header elevated :class="theme ? '' : 'bg-grey-6'">
       <q-toolbar>
         <q-btn
           flat
@@ -15,7 +15,13 @@
           Quasar Practice
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <!-- <div>Quasar v{{ $q.version }}</div> -->
+        <!-- <q-btn flat color="white" :icon="theme ? 'dark_mode' : 'light_mode'" label="" @click="themeChange" /> -->
+        <q-toggle
+          v-model="second"
+          color="yellow"
+          :icon="theme ? 'light_mode' : 'dark_mode'"
+        />
       </q-toolbar>
     </q-header>
 
@@ -33,8 +39,9 @@
         </q-item-label>
         <q-separator color="grey" />
         
+        <!-- expand-icon-class="text-black" -->
         <q-expansion-item
-          expand-icon-class="text-black"
+          
           icon="link"
           label="Original Links"
           style=" color: black;"
@@ -67,7 +74,7 @@
         >
           <MyQitemExpansion/>
         </q-expansion-item>
-        
+        <q-separator color="grey" />
       </q-list>
     </q-drawer>
 
@@ -79,7 +86,8 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { useQuasar } from 'quasar'
+import { defineComponent, ref, watch } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import MyQitemExpansion from 'components/MyQitemExpansion.vue'
 import IsTest  from 'components/IsTest.vue'
@@ -171,16 +179,42 @@ export default defineComponent({
   },
 
   setup () {
+    const $q = useQuasar()
     const leftDrawerOpen = ref(false)
+    const theme = ref(true)
+    const themeChange = () => {
+      // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+      theme.value = !theme.value
+      $q.dark.toggle()
+      return 0
+    }
+    const second = ref(true)
+    watch(()=> second.value == false, val =>{
+        theme.value = !theme.value
+        $q.dark.toggle()
+    })
 
     return {
+      second,
       essentialLinks: linksList,
       leftDrawerOpen,
+      theme,
+      themeChange,
       toggleLeftDrawer () {
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
-      exercise1Links
+      exercise1Links,
     }
   }
 })
 </script>
+
+<style>
+  .body--light{
+
+  }
+  .body--dark{
+    background-color: black;
+    color:white;
+  }
+</style>

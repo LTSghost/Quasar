@@ -1,5 +1,5 @@
 <template>
-    <q-list bordered style="width:300px">
+    <q-list style="width:300px" class="q-pa-lg">
         <MyQitemExpansion/>
     </q-list>
 </template>

@@ -265,6 +265,21 @@ function wrapCsvValue(val, formatFn, row) {
   return `"${formatted}"`;
 }
 
+function deepClone(obj) {
+  if (obj === null) {
+    return;
+  }
+  const newObj = obj.push ? [] : {}; // 如果obj有push方法则 定义newObj为数组，否则为对象。
+  for (const attr in obj) {
+    if (typeof obj[attr] === "object") {
+      newObj[attr] = deepClone(obj[attr]);
+    } else {
+      newObj[attr] = obj[attr];
+    }
+  }
+  return newObj;
+}
+
 export default {
   data() {
     return {
@@ -484,7 +499,8 @@ export default {
     },
     //开启修改商品弹窗
     EditRow(data) {
-      this.dialogData = data;
+      // this.dialogData = data;
+      this.dialogData = deepClone(data);
 
       this.isAdd = false;
       this.quotes_dialog = true;

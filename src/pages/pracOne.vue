@@ -69,7 +69,7 @@
           filled
           lazy-rules
           label="畢業日期 *"
-          v-model="date"
+          v-model="gradDate"
           placeholder="年/月/日"
           :rules="[(val) => !!val || '請輸入日期']"
           :error="form.gradDate.error"
@@ -77,7 +77,7 @@
             <template v-slot:append>
               <q-icon name="event" class="cursor-pointer">
                 <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="date">
+                  <q-date v-model="gradDate">
                     <div class="row items-center justify-end">
                       <q-btn v-close-popup label="Close" color="primary" flat />
                     </div>
@@ -165,7 +165,7 @@
 <script setup>
 import { useQuasar, Loading } from 'quasar';
 import { useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { ref, reactive } from 'vue';
 import { useStore } from 'vuex';
 
 const $store = useStore()
@@ -175,42 +175,42 @@ const router = useRouter()
 const toggleValue = ref(false)
 const isPwd = ref(true)
 
-const account = ref("abcdef1234567890_")
+// if reference vuex state will turning back the same state
+// const account = ref($store.state.showcase.account)
+
+// give default state
+const account = ref('abcdefg123456_')
 const accountRef = ref(null)
-account.value = $store.state.showcase.msg
+// account.value = $store.state.showcase.account
 
-const accountChange = () => {
-    $store.dispatch('showcase/updateAccount', account.value)
-}
-
-
-
-const password = ref("a12345B")
+const password = ref($store.state.showcase.password)
 const pwdRef = ref(null)
 
-const school = ref("")
+const school = ref($store.state.showcase.school)
 const schoolRef = ref(null)
 
-const gradDate = ref("")
+const gradDate = ref($store.state.showcase.gradDate)
 const gradDateRef = ref(null)
 
-const age = ref("18")
+// const age = ref($store.state.showcase.age)
+const age = ref(18)
 const ageRef = ref(null)
 
-const email = ref("JohnnieCena.k.lll@gmail__132as.dff")
+const email = ref($store.state.showcase.email)
 const emailRef = ref(null)
 
-const mobile = ref("0989534292")
+const mobile = ref($store.state.showcase.mobile)
 const mobileRef = ref(null)
 
 const date = ref("")
 
-const form = ref({
+const form = reactive({
   account: {
-    value:"abcdef1234567890_",
+    value:$store.state.showcase.account,
+    ref:null
     // value:"",
-    account:true,
-    required:true
+    // account:true,
+    // required:true
   },
   password: {
     value:"a12345B",
@@ -242,6 +242,9 @@ const form = ref({
     required:true
   }
 })
+
+console.log(accountRef.value);
+console.log(form.account.ref);
 
 const schOpt = ['台灣大學','清華大學','交通大學','成功大學']
 
@@ -279,9 +282,36 @@ const mobileRules = [
   val => (/^09[0-9]{8}$/.test(val)) || "手機號碼格式錯誤, ex: 09... 必須10位數字"
 ]
 
+// vuex action
+const accountChange = () => {
+    $store.dispatch('showcase/updateAccount', account.value)
+}
+const passwordChange = () => {
+    $store.dispatch('showcase/updatePassword', password.value)
+}
+const schoolChange = () => {
+    $store.dispatch('showcase/updateSchool', school.value)
+}
+const gradDateChange = () => {
+    $store.dispatch('showcase/updateGradDate', gradDate.value)
+}
+const ageChange = () => {
+    $store.dispatch('showcase/updatAge', age.value)
+}
+const emailChange = () => {
+    $store.dispatch('showcase/updatEmail', email.value)
+}
+const mobileChange = () => {
+    $store.dispatch('showcase/updatMobile', mobile.value)
+}
+
+
 const onSubmit = () => {
   console.log("submit")
+  // console.log(accountRef.value);
+  // console.log(form.account.ref);
   accountRef.value.validate()
+  // form.account.ref.validate()
   pwdRef.value.validate()
   schoolRef.value.validate()
   gradDateRef.value.validate()
@@ -297,7 +327,8 @@ const onSubmit = () => {
 
 
   if (accountRef.value.hasError || pwdRef.value.hasError || schoolRef.value.hasError 
-      || gradDateRef.value.hasError) {
+      || gradDateRef.value.hasError || ageRef.value.hasError || emailRef.value.hasError
+      || mobileRef.value.hasError) {
           // form has error
           return 0
   }
@@ -320,9 +351,15 @@ const onSubmit = () => {
     setTimeout(() => {
       Loading.hide()
       accountChange()
+      passwordChange()
+      schoolChange()
+      gradDateChange()
+      ageChange()
+      emailChange()
+      mobileChange()
       console.log($store.state.showcase.account);
       router.push({ path: '/prac1_result' })
-    }, 500);
+    }, 1000);
 
     
   }
@@ -332,7 +369,7 @@ const onReset = () => {
   account.value = ""
   password.value = ""
   school.value = ""
-  date.value = "年/月/日"
+  gradDate.value = "年/月/日"
   age.value = ""
   email.value = ""
   mobile.value = ""
@@ -343,7 +380,7 @@ const onReset = () => {
   // form.value.email = ""
   // form.value.mobile = ""
 
-  accountRef.value.resetValidation()
+  form.account.ref.resetValidation()
   pwdRef.value.resetValidation()
   schoolRef.value.resetValidation()
   gradDateRef.value.resetValidation()
