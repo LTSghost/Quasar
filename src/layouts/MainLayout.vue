@@ -12,8 +12,20 @@
         />
 
         <q-toolbar-title>
-          Quasar Practice
+          {{ $t('toolbarTitle') }}
         </q-toolbar-title>
+
+        <q-select
+            v-model="locale"
+            :options="localeOptions"
+            :label="$t('chooseLanguage')"
+            dense
+            borderless
+            emit-value
+            map-options
+            options-dense
+            style="width: 150px;"
+          />
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
         <!-- <q-btn flat color="white" :icon="theme ? 'dark_mode' : 'light_mode'" label="" @click="themeChange" /> -->
@@ -35,7 +47,7 @@
           header
           class="border"
         >
-          Links
+        {{ $t('toolbarLinks') }}
         </q-item-label>
         <q-separator color="grey" />
         
@@ -43,7 +55,7 @@
         <q-expansion-item
           
           icon="link"
-          label="Original Links"
+          :label="$t('MainLayoutLink1')"
           style=" color: black;"
         >
 
@@ -56,8 +68,8 @@
         <q-separator color="grey" />
 
         <q-expansion-item
-        icon="code"
-          label="Exercise1"
+          icon="code"
+          :label="$t('MainLayoutLink2')"
         >  
           <EssentialLink
               v-for="link in exercise1Links"
@@ -70,7 +82,7 @@
         <q-expansion-item
           default-opened
           icon="code"
-          label="Exercise2"
+          :label="$t('MainLayoutLink3')"
         >
           <MyQitemExpansion/>
         </q-expansion-item>
@@ -91,6 +103,9 @@ import { defineComponent, ref, watch } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import MyQitemExpansion from 'components/MyQitemExpansion.vue'
 import IsTest  from 'components/IsTest.vue'
+import { useI18n } from 'vue-i18n'
+import enUS from 'src/i18n/en-US'
+import zhTW from 'src/i18n/zh-TW'
 
 const linksList = [
   {
@@ -180,6 +195,7 @@ export default defineComponent({
 
   setup () {
     const $q = useQuasar()
+    const { locale } = useI18n({ useScope: 'global' })
     const leftDrawerOpen = ref(false)
     const theme = ref(true)
     const themeChange = () => {
@@ -195,6 +211,11 @@ export default defineComponent({
     })
 
     return {
+      locale,
+      localeOptions: [
+        { value: 'en-US', label: 'English' },
+        { value: 'zh-TW', label: '繁體中文' }
+      ],
       second,
       essentialLinks: linksList,
       leftDrawerOpen,

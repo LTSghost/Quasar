@@ -1,7 +1,7 @@
 <template>
   <q-page class="flex flex-center">
     <q-table
-      title="Merchandise"
+      :title="$t('pracTwoTitle')"
       :grid="isGrid"
       :rows="rows"  
       :columns="columns"
@@ -13,7 +13,7 @@
 
       <template v-slot:top-right="props">
 
-        <q-btn class="q-mr-sm" color="primary" label="新增" @click="addDialog" />
+        <q-btn class="q-mr-sm" color="primary" :label="$t('pracTwoAdd')" @click="addDialog" />
 
         <!-- filter input -->
         <q-input
@@ -21,7 +21,7 @@
           dense
           debounce="300"
           v-model="filter"
-          placeholder="Search"
+          :placeholder="$t('pracTwoSearch')"
         >
           <template v-slot:append>
             <q-icon name="search" />
@@ -51,7 +51,7 @@
         <q-btn
           color="primary"
           icon-right="archive"
-          label="Export to csv"
+          :label="$t('pracTwoCSV')"
           no-caps
           @click="exportTable"
         />
@@ -98,7 +98,7 @@
     <!-- addDialog -->
     <q-dialog v-model="addForm.isEdit">
       <q-card class="q-pa-lg" style="max-width: 500px; width: 100%">
-        <h5 class="text-center text-bold q-mb-lg">新增資料</h5>
+        <h5 class="text-center text-bold q-mb-lg">{{ $t('pracTwoAddDialog') }}</h5>
         <div>
           <q-form
             @submit.prevent.stop="onSubmitAdd"
@@ -108,7 +108,7 @@
                 <div class="col-12">
                   <q-input
                   outlined 
-                  label="商品代號 *" 
+                  :label="$t('pracTwoItemNo') + ' *'" 
                   stack-label
                   :rules="itemNoRules"
                   v-model="addForm.model.item_no"
@@ -116,7 +116,7 @@
                   </q-input>
                 </div>
                 <div class="col-12">
-                  <q-input label="商品名稱 *" 
+                  <q-input :label="$t('pracTwoItemName') + ' *'" 
                   stack-label 
                   outlined
                   :rules="[val => !!val || '商品名稱不能為空']"
@@ -124,7 +124,7 @@
                   ></q-input>
                 </div>
                 <div class="col-12">
-                  <q-input label="價格 *" 
+                  <q-input :label="$t('pracTwoPrice') + ' *'" 
                   stack-label 
                   outlined 
                   v-model="addForm.model.price" 
@@ -136,9 +136,9 @@
                 ref="startDateRef"
                 outlined 
                 lazy-rules
-                label="適用開始日"
+                :label="$t('pracTwoStartDay')"
                 stack-label=""
-                placeholder="年/月/日"
+                :placeholder="$t('pracTwoDayPlaceHolder')"
                 v-model="addForm.model.eff_date_from"
                 :rules="[(val) => !!val || '請輸入適用開始日',]">
                   <template v-slot:append>
@@ -160,9 +160,9 @@
                 ref="endDateRef"
                 outlined 
                 lazy-rules
-                label="適用結束日 *"
+                :label="$t('pracTwoEndDay') + ' *'"
                 stack-label=""
-                placeholder="年/月/日"
+                :placeholder="$t('pracTwoDayPlaceHolder')"
                 v-model="addForm.model.eff_date_to"
                 :rules="[(val) => !!val || '請輸入適用結束日']">
                   <template v-slot:append>
@@ -186,7 +186,7 @@
                 lazy-rules
                 v-model="addForm.model.tax" 
                 :options="taxOpt"
-                label="稅別 *"
+                :label="$t('pracTwoTax') + ' *'"
                 :rules="[val => !!val || '請選擇稅別']"/>
               </div>
             <!-- </div> -->
@@ -208,7 +208,7 @@
     <!-- editDialog -->
     <q-dialog v-model="editForm.isEdit">
       <q-card class="q-pa-lg" style="max-width: 500px; width: 100%">
-          <h5 class="text-center text-bold q-mb-lg">新增資料</h5>
+          <h5 class="text-center text-bold q-mb-lg">{{ $t('pracTwoModifyDialog') }}</h5>
           <!-- <div class="row q-col-gutter-md">
             <div class="col-12">
               <q-input label="商品代號 *" readonly stack-label outlined v-model="editForm.model.item_no"></q-input>

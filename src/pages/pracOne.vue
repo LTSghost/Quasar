@@ -10,7 +10,7 @@
           ref="accountRef"
           filled
           lazy-rules
-          label="帳號 *"
+          :label="$t('pracOneAccount')"
           v-model="account"
           :rules="accountRules">
             <template v-slot:append>
@@ -25,7 +25,7 @@
           ref="pwdRef"
           filled
           lazy-rules
-          label="密碼 *"
+          :label="$t('pracOnePassword')"
           :rules="passwordRules"
           :type="isPwd? 'password' : 'text'"
           v-model="password">
@@ -49,7 +49,7 @@
           clearable 
           v-model="school" 
           :options="schOpt"
-          label="畢業學校 *"
+          :label="$t('pracOneSchool')"
           :rules="[val => !!val || '請選擇畢業學校']"/>
 
           <!-- <q-input
@@ -68,7 +68,7 @@
           ref="gradDateRef"
           filled
           lazy-rules
-          label="畢業日期 *"
+          :label="$t('pracOneGradDate')"
           v-model="gradDate"
           placeholder="年/月/日"
           :rules="[(val) => !!val || '請輸入日期']"
@@ -96,7 +96,7 @@
           ref="ageRef"
           filled
           lazy-rules
-          label="年齡 *"
+          :label="$t('pracOneAge')"
           v-model="age"
           :rules="ageRules"
           :error="form.age.error"
@@ -112,7 +112,7 @@
           ref="emailRef"
           filled
           lazy-rules
-          label="電子郵件 *"
+          :label="$t('pracOneEmail')"
           v-model="email"
           :rules="emailRules"
           :error="form.email.error"
@@ -134,7 +134,7 @@
           ref="mobileRef"
           filled
           lazy-rules
-          label="手機號碼 *"
+          :label="$t('pracOneMobile')"
           v-model="mobile"
           :rules="mobileRules"
           :error="form.mobile.error"
@@ -147,30 +147,33 @@
     </div>
     <!-- login allowTerm -->
     <div class="q-pa-md fit row wrap justify-center items-start content-start">
-        <q-toggle font="text-weight-bold" label="我接受許可證和條款" v-model="toggleValue" color="blue" />
+        <q-toggle font="text-weight-bold" :label="$t('pracOneLicence')" v-model="toggleValue" color="blue" />
       </div>
     <div class="q-pa-md fit row wrap justify-center items-start content-start">
       <div>
-        <q-btn color="primary" type="submit" label="提交"/>
-        <q-btn class="q-ml-sm" type="reset" color="white" text-color="blue" label="重置"/>
+        <q-btn color="primary" type="submit" :label="$t('pracOneSubmit')"/>
+        <q-btn class="q-ml-sm" type="reset" color="white" text-color="blue" :label="$t('pracOneReset')"/>
       </div>
     </div>
       <!-- <div class="q-pt-lg">
         <q-btn color="primary" icon="check" label="Show another notification" @click="showNotification" />
       </div> -->
     </form>
+    <!-- {{ test }} -->
   </q-page>
 </template>
 
 <script setup>
 import { useQuasar, Loading } from 'quasar';
 import { useRouter } from 'vue-router';
-import { ref, reactive } from 'vue';
+import { ref, reactive, watch, computed } from 'vue';
 import { useStore } from 'vuex';
+import { useI18n } from 'vue-i18n';
 
 const $store = useStore()
 const $q = useQuasar()
 const router = useRouter()
+const { t } = useI18n()
 
 const toggleValue = ref(false)
 const isPwd = ref(true)
@@ -181,7 +184,7 @@ const isPwd = ref(true)
 // give default state
 const account = ref('abcdefg123456_')
 const accountRef = ref(null)
-// account.value = $store.state.showcase.account
+account.value = $store.state.showcase.account
 
 const password = ref($store.state.showcase.password)
 const pwdRef = ref(null)
@@ -192,8 +195,8 @@ const schoolRef = ref(null)
 const gradDate = ref($store.state.showcase.gradDate)
 const gradDateRef = ref(null)
 
-// const age = ref($store.state.showcase.age)
-const age = ref(18)
+const age = ref($store.state.showcase.age)
+// const age = ref(18)
 const ageRef = ref(null)
 
 const email = ref($store.state.showcase.email)
@@ -246,7 +249,26 @@ const form = reactive({
 console.log(accountRef.value);
 console.log(form.account.ref);
 
-const schOpt = ['台灣大學','清華大學','交通大學','成功大學']
+
+const msg = computed(() => {
+  return t('failed')
+})
+
+const test = ref([msg,t('pracOne_resultReturn')])
+
+// const schOpt = ref(t('pracOne_resultReturn'))
+const schOpt = ref(['台灣大學','清華大學','交通大學','成功大學'])
+
+console.log(t('pracOneSchoolList.Fir[0]'));
+
+watch($q.lang.getLocale() )
+
+console.log($q.lang.getLocale())
+
+// const schOpt = [
+//   { value: 'en-US', label:['台灣大學','清華大學','交通大學','成功大學'] },
+//   { value: 'zh-TW', label:['台灣大學','清華大學','交通大學','成功大學'] }
+// ]
 
 const accountRules = [
   val => !!val || '請輸入帳號',

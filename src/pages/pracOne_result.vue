@@ -11,7 +11,7 @@
           ref="accountRef"
           filled
           lazy-rules
-          label="帳號 *"
+          :label="$t('pracOneAccount')"
           v-model="account"
           :rules="accountRules">
             <template v-slot:append>
@@ -27,7 +27,7 @@
           ref="pwdRef"
           filled
           lazy-rules
-          label="密碼 *"
+          :label="$t('pracOnePassword')"
           :rules="passwordRules"
           :type="isPwd? 'password' : 'text'"
           v-model="password">
@@ -52,7 +52,7 @@
           clearable 
           v-model="school" 
           :options="schOpt"
-          label="畢業學校 *"
+          :label="$t('pracOneSchool')"
           :rules="[val => !!val || '請選擇畢業學校']"/>
 
           <!-- <q-input
@@ -72,7 +72,7 @@
           ref="gradDateRef"
           filled
           lazy-rules
-          label="畢業日期 *"
+          :label="$t('pracOneGradDate')"
           v-model="gradDate"
           placeholder="年/月/日"
           :rules="[(val) => !!val || '請輸入日期']"
@@ -101,7 +101,7 @@
           ref="ageRef"
           filled
           lazy-rules
-          label="年齡 *"
+          :label="$t('pracOneAge')"
           v-model="age"
           :rules="ageRules"
           :error="form.age.error"
@@ -118,7 +118,7 @@
           ref="emailRef"
           filled
           lazy-rules
-          label="電子郵件 *"
+          :label="$t('pracOneEmail')"
           v-model="email"
           :rules="emailRules"
           :error="form.email.error"
@@ -141,7 +141,7 @@
           ref="mobileRef"
           filled
           lazy-rules
-          label="手機號碼 *"
+          :label="$t('pracOneMobile')"
           v-model="mobile"
           :rules="mobileRules"
           :error="form.mobile.error"
@@ -160,7 +160,7 @@
       <div>
         <!-- <q-btn color="primary" type="submit" label="提交"/> -->
         <!-- <q-btn class="q-ml-sm" type="reset" color="white" text-color="blue" label="重置"/> -->
-        <q-btn color="primary" icon="replay" label="返回" @click="turnBack" />
+        <q-btn color="primary" icon="replay" :label="$t('pracOne_resultReturn')" @click="turnBack" />
       </div>
     </div>
       <!-- <div class="q-pt-lg">
