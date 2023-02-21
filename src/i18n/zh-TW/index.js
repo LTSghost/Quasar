@@ -13,6 +13,7 @@ export default {
   MainLayoutLink1: '原始連結',
   MainLayoutLink2: '訓練1',
   MainLayoutLink3: '訓練2',
+  MainLayoutLink4: '訓練2解答',
 
   // pracOne
   pracOneAccount: '帳號 *',
@@ -32,6 +33,8 @@ export default {
     Thr: '交通大學',
     Four: '成功大學'
   },
+  pracOneSubmitMsg: '提交過程中， 請稍等...',
+
   // pracTwo
   pracTwoTitle: '商品',
   pracTwoAdd: '新增',
@@ -45,5 +48,6 @@ export default {
   pracTwoStartDay: '適用開始日',
   pracTwoEndDay: '適用結束日',
   pracTwoTax: '稅別',
-  pracTwoDayPlaceHolder: '年/月/日'
+  pracTwoDayPlaceHolder: '年/月/日',
+  pracTwoReturn: '正在返回...'
 }

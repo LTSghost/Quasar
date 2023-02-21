@@ -13,6 +13,7 @@ export default {
   MainLayoutLink1: 'Original Links',
   MainLayoutLink2: 'Exercise1',
   MainLayoutLink3: 'Exercise2',
+  MainLayoutLink4: 'Exercise2 Sol',
 
   // pracOne
   pracOneAccount: 'Account *',
@@ -32,6 +33,7 @@ export default {
     Thr: '交通大學',
     Four: '成功大學'
   },
+  pracOneSubmitMsg: 'Submission process， please wait...',
 
   // pracTwo
   pracTwoTitle: 'Merchandise',
@@ -46,5 +48,6 @@ export default {
   pracTwoStartDay: 'Effective from',
   pracTwoEndDay: 'Effective to',
   pracTwoTax: 'Tax Type',
-  pracTwoDayPlaceHolder: 'yyyy/mm/dd'
+  pracTwoDayPlaceHolder: 'yyyy/mm/dd',
+  pracTwoReturn: 'Turning back...'
 }

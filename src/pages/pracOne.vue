@@ -2,178 +2,157 @@
 
   <q-page>
     <form @submit.prevent.stop="onSubmit" @reset.prevent.stop="onReset">
-    <!-- ac pwd -->
-    <div class="row">
-      <!-- account -->
-        <div class="col q-pl-xl q-pt-xl q-pr-sm q-pb-xs">
-          <q-input
-          ref="accountRef"
-          filled
-          lazy-rules
-          :label="$t('pracOneAccount')"
-          v-model="account"
-          :rules="accountRules">
-            <template v-slot:append>
-              <q-icon name="person"></q-icon>
-            </template>
-          </q-input>
-          
-        </div>
-        <!-- pwd -->
-        <div class="col q-pl-sm q-pt-xl q-pr-xl q-pb-xs">
-          <q-input
-          ref="pwdRef"
-          filled
-          lazy-rules
-          :label="$t('pracOnePassword')"
-          :rules="passwordRules"
-          :type="isPwd? 'password' : 'text'"
-          v-model="password">
-            <template v-slot:append>
-              <q-icon
-              :name="isPwd? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"></q-icon>
-            </template>
-          </q-input>
-        </div>
-    </div>
-    <!-- school gradDate -->
-    <div class="row">
-        <!-- school -->
-        <div class="col q-pl-xl q-pt-xs q-pr-sm q-pb-xs"> 
-          <q-select
-          ref="schoolRef"
-          filled
-          lazy-rules
-          clearable 
-          v-model="school" 
-          :options="schOpt"
-          :label="$t('pracOneSchool')"
-          :rules="[val => !!val || '請選擇畢業學校']"/>
-
-          <!-- <q-input
-          filled
-          label="畢業學校 *"
-          v-model="form.school.value"
-          :rules="[val => !!val || '請選擇畢業學校']"
-          :options="schOpt"
-          :error="form.school.error"
-          :error-message="form.school.msg">
-          </q-input> -->
-        </div>
-        <!-- graduate_date -->
-        <div class="col q-pl-sm q-pt-xs q-pr-xl q-pb-xs"> 
-          <q-input
-          ref="gradDateRef"
-          filled
-          lazy-rules
-          :label="$t('pracOneGradDate')"
-          v-model="gradDate"
-          placeholder="年/月/日"
-          :rules="[(val) => !!val || '請輸入日期']"
-          :error="form.gradDate.error"
-          :error-message="form.gradDate.msg">
-            <template v-slot:append>
-              <q-icon name="event" class="cursor-pointer">
-                <q-popup-proxy cover transition-show="scale" transition-hide="scale">
-                  <q-date v-model="gradDate">
-                    <div class="row items-center justify-end">
-                      <q-btn v-close-popup label="Close" color="primary" flat />
-                    </div>
-                  </q-date>
-                </q-popup-proxy>
-              </q-icon>
-            </template>
-          </q-input>
-        </div>
-    </div>
-    <!-- age email -->
-    <div class="row">
-        <!-- age -->
-        <div class="col q-pl-xl q-pt-xs q-pr-sm q-pb-xs">
-          <q-input
-          ref="ageRef"
-          filled
-          lazy-rules
-          :label="$t('pracOneAge')"
-          v-model="age"
-          :rules="ageRules"
-          :error="form.age.error"
-          :error-message="form.age.msg">
-            <!-- <template v-slot:append>
-              <q-icon name="person"></q-icon>
-            </template> -->
-          </q-input>
-        </div>
-        <!-- email -->
-        <div class="col q-pl-sm q-pt-xs q-pr-xl q-pb-xs">
-          <q-input
-          ref="emailRef"
-          filled
-          lazy-rules
-          :label="$t('pracOneEmail')"
-          v-model="email"
-          :rules="emailRules"
-          :error="form.email.error"
-          :error-message="form.email.msg">
-            <!-- <template v-slot:append>
-              <q-icon
-              :name="isPwd? 'visibility_off' : 'visibility'"
-              class="cursor-pointer"
-              @click="isPwd = !isPwd"></q-icon>
-            </template> -->
-          </q-input>
-        </div>
-    </div>
-    <!-- mobile -->
-    <div class="row">
-        <!-- mobile -->
-        <div class="col-6 q-pl-xl q-pt-xs q-pr-sm">
-          <q-input
-          ref="mobileRef"
-          filled
-          lazy-rules
-          :label="$t('pracOneMobile')"
-          v-model="mobile"
-          :rules="mobileRules"
-          :error="form.mobile.error"
-          :error-message="form.mobile.msg">
-            <!-- <template v-slot:append>
-              <q-icon name="person"></q-icon>
-            </template> -->
-          </q-input>
-        </div>
-    </div>
-    <!-- login allowTerm -->
-    <div class="q-pa-md fit row wrap justify-center items-start content-start">
-        <q-toggle font="text-weight-bold" :label="$t('pracOneLicence')" v-model="toggleValue" color="blue" />
+      <!-- ac pwd -->
+      <div class="row">
+        <!-- account -->
+          <div class="col q-pl-xl q-pt-xl q-pr-sm q-pb-xs">
+            <q-input
+            ref="accountRef"
+            filled
+            lazy-rules
+            :label="$t('pracOneAccount')"
+            v-model="account"
+            :rules="accountRules">
+              <template v-slot:append>
+                <q-icon name="person"></q-icon>
+              </template>
+            </q-input>
+            
+          </div>
+          <!-- pwd -->
+          <div class="col q-pl-sm q-pt-xl q-pr-xl q-pb-xs">
+            <q-input
+            ref="pwdRef"
+            filled
+            lazy-rules
+            :label="$t('pracOnePassword')"
+            :rules="passwordRules"
+            :type="isPwd? 'password' : 'text'"
+            v-model="password">
+              <template v-slot:append>
+                <q-icon
+                :name="isPwd? 'visibility_off' : 'visibility'"
+                class="cursor-pointer"
+                @click="isPwd = !isPwd"></q-icon>
+              </template>
+            </q-input>
+          </div>
       </div>
-    <div class="q-pa-md fit row wrap justify-center items-start content-start">
-      <div>
-        <q-btn color="primary" type="submit" :label="$t('pracOneSubmit')"/>
-        <q-btn class="q-ml-sm" type="reset" color="white" text-color="blue" :label="$t('pracOneReset')"/>
+      <!-- school gradDate -->
+      <div class="row">
+          <!-- school -->
+          <div class="col q-pl-xl q-pt-xs q-pr-sm q-pb-xs"> 
+            <q-select
+              ref="schoolRef"
+              filled
+              lazy-rules
+              clearable 
+              v-model="school" 
+              :options="schOpt"
+              :label="$t('pracOneSchool')"
+              :rules="[val => !!val || '請選擇畢業學校']"
+            />
+          </div>
+          <!-- graduate_date -->
+          <div class="col q-pl-sm q-pt-xs q-pr-xl q-pb-xs"> 
+            <q-input
+              ref="gradDateRef"
+              filled
+              lazy-rules
+              :label="$t('pracOneGradDate')"
+              v-model="gradDate"
+              placeholder="年/月/日"
+              :rules="[(val) => !!val || '請輸入日期']"
+              :error="form.gradDate.error"
+              :error-message="form.gradDate.msg"
+            >
+              <template v-slot:append>
+                <q-icon name="event" class="cursor-pointer">
+                  <q-popup-proxy cover transition-show="scale" transition-hide="scale">
+                    <q-date v-model="gradDate">
+                      <div class="row items-center justify-end">
+                        <q-btn v-close-popup label="Close" color="primary" flat />
+                      </div>
+                    </q-date>
+                  </q-popup-proxy>
+                </q-icon>
+              </template>
+            </q-input>
+          </div>
       </div>
-    </div>
-      <!-- <div class="q-pt-lg">
-        <q-btn color="primary" icon="check" label="Show another notification" @click="showNotification" />
-      </div> -->
+      <!-- age email -->
+      <div class="row">
+          <!-- age -->
+          <div class="col q-pl-xl q-pt-xs q-pr-sm q-pb-xs">
+            <q-input
+              ref="ageRef"
+              filled
+              lazy-rules
+              :label="$t('pracOneAge')"
+              v-model="age"
+              :rules="ageRules"
+              :error="form.age.error"
+              :error-message="form.age.msg"
+            >
+            </q-input>
+          </div>
+          <!-- email -->
+          <div class="col q-pl-sm q-pt-xs q-pr-xl q-pb-xs">
+            <q-input
+              ref="emailRef"
+              filled
+              lazy-rules
+              :label="$t('pracOneEmail')"
+              v-model="email"
+              :rules="emailRules"
+              :error="form.email.error"
+              :error-message="form.email.msg"
+            >
+            </q-input>
+          </div>
+      </div>
+      <!-- mobile -->
+      <div class="row">
+          <!-- mobile -->
+          <div class="col-6 q-pl-xl q-pt-xs q-pr-sm">
+            <q-input
+              ref="mobileRef"
+              filled
+              lazy-rules
+              :label="$t('pracOneMobile')"
+              v-model="mobile"
+              :rules="mobileRules"
+              :error="form.mobile.error"
+              :error-message="form.mobile.msg"
+            >
+            </q-input>
+          </div>
+      </div>
+      <!-- login allowTerm -->
+      <div class="q-pa-md fit row wrap justify-center items-start content-start">
+          <q-toggle font="text-weight-bold" :label="$t('pracOneLicence')" v-model="toggleValue" color="blue" />
+      </div>
+      <div class="q-pa-md fit row wrap justify-center items-start content-start">
+        <div>
+          <q-btn color="primary" type="submit" :label="$t('pracOneSubmit')"/>
+          <q-btn class="q-ml-sm" type="reset" color="white" text-color="blue" :label="$t('pracOneReset')"/>
+        </div>
+      </div>
     </form>
-    <!-- {{ test }} -->
   </q-page>
 </template>
 
 <script setup>
 import { useQuasar, Loading } from 'quasar';
 import { useRouter } from 'vue-router';
-import { ref, reactive, watch, computed } from 'vue';
+import { ref, reactive, watch, computed, onBeforeMount } from 'vue';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 
 const $store = useStore()
 const $q = useQuasar()
 const router = useRouter()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const toggleValue = ref(false)
 const isPwd = ref(true)
@@ -250,20 +229,59 @@ console.log(accountRef.value);
 console.log(form.account.ref);
 
 
-const msg = computed(() => {
-  return t('failed')
+
+const schOpt = reactive(['台灣大學','清華大學','交通大學','成功大學'])
+
+onBeforeMount(() => {
+  if (locale.value == 'zh-TW') {
+      console.log(locale);
+      schOpt[0] = '台灣大學'
+      schOpt[1] = '清華大學'
+      schOpt[2] = '交通大學'
+      schOpt[3] = '成功大學'
+    }
+  if (locale.value == 'en-US') {
+    console.log(locale);
+    schOpt[0] = 'UTA'
+    schOpt[1] = 'UTHU'
+    schOpt[2] = 'NYCU'
+    schOpt[3] = 'NCKU'
+  }
+  console.log("onBeforeMount");
+  watch(locale,()=>{
+  console.log(locale.value);
+  if (locale.value == 'zh-TW') {
+    console.log(locale);
+    schOpt[0] = '台灣大學'
+    schOpt[1] = '清華大學'
+    schOpt[2] = '交通大學'
+    schOpt[3] = '成功大學'
+  }
+  if (locale.value == 'en-US') {
+    console.log(locale);
+    schOpt[0] = 'UTA'
+    schOpt[1] = 'UTHU'
+    schOpt[2] = 'NYCU'
+    schOpt[3] = 'NCKU'
+  }
+  })
 })
 
-const test = ref([msg,t('pracOne_resultReturn')])
 
-// const schOpt = ref(t('pracOne_resultReturn'))
-const schOpt = ref(['台灣大學','清華大學','交通大學','成功大學'])
 
 console.log(t('pracOneSchoolList.Fir[0]'));
 
-watch($q.lang.getLocale() )
+const nowLanguage = ref($q.lang.getLocale())
+console.log(nowLanguage.value)
 
-console.log($q.lang.getLocale())
+watch($q.lang.getLocale(), () => {
+  console.log(1);
+}, {deep:true})
+
+watch(()=> nowLanguage.value == 'en-US', val =>{
+  console.log(1);
+})
+
 
 // const schOpt = [
 //   { value: 'en-US', label:['台灣大學','清華大學','交通大學','成功大學'] },
@@ -367,7 +385,8 @@ const onSubmit = () => {
       message: 'Submitted'
     })
     Loading.show({
-          message: '提交過程中， 請等待...'
+          // message: '提交過程中， 請等待...'
+          message: t('pracOneSubmitMsg')
     })
 
     setTimeout(() => {

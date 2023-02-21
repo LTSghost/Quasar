@@ -112,6 +112,35 @@ const routes = [
       { path: 'pages/Test2.vue', component: () => import('pages/pracTest.vue') }
     ]
   },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'exer2Sol', component: () => import('pages/Practice2-1.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'exer2Sol_Result', component: () => import('pages/PracticeResult2-1.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'exer2Sol2', component: () => import('pages/Practice2-2.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'questionnaire', component: () => import('pages/QuestionnaireForm.vue') }
+    ]
+  },
+
   
   // {
   //   path: '/prac1',

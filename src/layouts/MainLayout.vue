@@ -87,6 +87,19 @@
           <MyQitemExpansion/>
         </q-expansion-item>
         <q-separator color="grey" />
+
+        <q-expansion-item
+          expand-separator
+          icon="tips_and_updates"
+          :label="$t('MainLayoutLink4')"
+        >
+          <EssentialLink
+            v-for="link in exercise2SolLinks"
+            :key="link.title"
+            v-bind="link"
+          />
+        </q-expansion-item>
+
       </q-list>
     </q-drawer>
 
@@ -174,16 +187,40 @@ const linksList = [
     icon: 'tips_and_updates',
     link: '/Sol3'
   },
+  {
+    title: 'exer2Sol',
+    caption: 'exer2Sol',
+    icon: 'tips_and_updates',
+    link: '/exer2Sol'
+  },
+  {
+    title: 'exer2Sol2',
+    caption: 'exer2Sol2',
+    icon: 'tips_and_updates',
+    link: '/exer2Sol2'
+  },
+  {
+    title: 'questionnaire',
+    caption: 'questionnaire',
+    icon: 'dynamic_form',
+    link: '/questionnaire'
+  },
 ]
 
 const exercise1Links = []
-
 linksList.forEach(element => {
   // console.log(element.link);
   if (['/prac1','/prac2','/prac3'].includes(element.link)) {
     exercise1Links.push(element)
   }
 });
+
+const exercise2SolLinks = []
+linksList.forEach(element => {
+  if (['/exer2Sol','/exer2Sol2'].includes(element.link)) {
+    exercise2SolLinks.push(element)
+  }
+})
 
 export default defineComponent({
   name: 'MainLayout',
@@ -225,6 +262,7 @@ export default defineComponent({
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       exercise1Links,
+      exercise2SolLinks
     }
   }
 })

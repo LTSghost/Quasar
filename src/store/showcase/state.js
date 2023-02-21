@@ -1,5 +1,9 @@
 export default function () {
   return {
+    // Sol_result
+    practiceUserInfo:{
+    },
+
     msg:"",
     account:"abcdefg1234567890_",
     password:"a12345B",

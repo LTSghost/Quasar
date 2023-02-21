@@ -175,10 +175,12 @@ import { useQuasar, Loading } from 'quasar'
 import { useRouter } from 'vue-router'
 import { ref, computed } from 'vue';
 import { useStore } from 'vuex';
+import { useI18n } from 'vue-i18n';
 
 const $store = useStore()
 const $q = useQuasar()
 const router = useRouter()
+const { t } = useI18n()
 
 const toggleValue = ref(false)
 const isPwd = ref(true)
@@ -332,7 +334,7 @@ const onSubmit = () => {
 }
 const turnBack = () =>{
   Loading.show({
-          message: 'Turning back'
+          message: t('pracTwoReturn')
     })
   setTimeout(() => {
     Loading.hide()
