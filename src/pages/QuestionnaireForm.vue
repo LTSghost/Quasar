@@ -1,5 +1,8 @@
 <template>
     <q-page class="flex-center q-pa-lg">
+
+        useTimer {{ timer.minutes }},{{ timer.seconds }}
+        <br>
         {{ allTime }}
         <div class="q-pa-lg" v-if="showTime1">第一頁還剩下 {{ firstTime }} 秒</div>
         <div class="q-pa-lg" v-if="showTime234">第二,三,四頁還剩下 {{ leftTime }} 秒</div>
@@ -41,6 +44,13 @@
 <script setup>
 import { ref, reactive, watch, computed, onMounted, 
         watchEffect, getCurrentInstance } from 'vue'
+import { useTimer } from 'vue-timer-hook';
+
+const time = new Date();
+time.setSeconds(time.getSeconds() + 600); // 10 minutes timer
+const timer = useTimer(time);
+
+console.log(timer);
 
 const instance = getCurrentInstance()
 

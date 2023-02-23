@@ -203,7 +203,7 @@ const linksList = [
     title: 'questionnaire',
     caption: 'questionnaire',
     icon: 'dynamic_form',
-    link: '/questionnaire'
+    link: '/questionnaireBegin'
   },
 ]
 

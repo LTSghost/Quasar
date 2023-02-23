@@ -140,6 +140,20 @@ const routes = [
       { path: 'questionnaire', component: () => import('pages/QuestionnaireForm.vue') }
     ]
   },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'questionnaireBegin', component: () => import('pages/QuestionnaireFormBegin.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout.vue'),
+    children: [
+      { path: 'questionnaire2', component: () => import('pages/QuestionnaireForm2.vue') }
+    ]
+  },
 
   
   // {
