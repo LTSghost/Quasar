@@ -53,6 +53,12 @@ module.exports = configure(function (ctx) {
     build: {
       vueRouterMode: 'hash', // available values: 'hash', 'history'
 
+      env:{
+        env_API: ctx.dev
+        ? "http://localhost/VueTest/api"
+        : "http://localhost/VueTest/api",
+      },
+
       // transpile: false,
       // publicPath: '/',
 
