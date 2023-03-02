@@ -164,7 +164,7 @@ const postAxios = () => {
             userChange(res.data.User.USER_ID)
             nameChange(res.data.User.USER_NAME)
 
-            $router.push("/").then((e) => {
+            $router.push("/home").then((e) => {
                 $q.notify({
                     // message: res.data.Message,
                     message: "登入成功",

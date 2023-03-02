@@ -163,6 +163,88 @@ const routes = [
     ]
   },
 
+
+  // MainLayout2
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout2.vue'),
+    children: [
+      { path: 'UserSet', component: () => import('pages/IndexPage.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout2.vue'),
+    children: [
+      { path: 'RoleSet', component: () => import('pages/IndexPage.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout2.vue'),
+    children: [
+      { path: 'MenuSet', component: () => import('pages/IndexPage.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout2.vue'),
+    children: [
+      { path: 'Practice1-1', component: () => import('pages/pracOne.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout2.vue'),
+    children: [
+      { path: 'Practice1-2', component: () => import('pages/pracTwo.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout2.vue'),
+    children: [
+      { path: 'Practice1-3', component: () => import('pages/pracThr.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout2.vue'),
+    children: [
+      { path: 'Practice1-4', component: () => import('pages/pracFour.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout2.vue'),
+    children: [
+      { path: 'Practice2-1', component: () => import('pages/pracOne.vue') }
+    ]
+  },
+  {
+    path: '/',
+    component: () => import('layouts/MainLayout2.vue'),
+    children: [
+      { path: 'Practice2-2', component: () => import('pages/pracFour.vue') }
+    ]
+  },
+  {
+    path: '/Practice3-1',
+    component: () => import('pages/AccountLogin.vue')
+  },
+  {
+    path: '/Practice3-2',
+    component: () => import('layouts/MainLayout2.vue')
+  },
+  { 
+    path: '/',
+    component: () => import('layouts/MainLayout2.vue'),
+    children: [
+      { path: 'Practice3-3', component: () => import('pages/merchMaintain.vue') }
+    ]
+  },
+
+
   
   // {
   //   path: '/prac1',

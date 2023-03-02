@@ -24,6 +24,25 @@ export default {
   MainAccountName: 'Name: ',
   logOut: 'LOGOUT',
 
+  // QueryMenuInfo
+  systemManage: 'systemManage',
+  userSet: 'userSet',
+  roleSet: 'roleSet',
+  menuSet: 'menuSet',
+  practice1:'practice1',
+  practice1_1:'practice1-1',
+  practice1_2:'practice1-2',
+  practice1_3:'practice1-3',
+  practice1_4:'practice1-4',
+  practice2:'practice2',
+  practice2_1:'practice2-1',
+  practice2_2:'practice2-2',
+  practice3:'practice3',
+  practice3_1:'practice3-1',
+  practice3_2:'practice3-2',
+  practice3_3:'practice3-3',
+
+
   // pracOne
   pracOneAccount: 'Account *',
   pracOnePassword: 'Password *',

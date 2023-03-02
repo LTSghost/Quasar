@@ -24,6 +24,24 @@ export default {
   MainAccountName: '用戶名: ',
   logOut: '登出',
 
+  // QueryMenuInfo
+  systemManage: '系統管理',
+  userSet: '用戶管理',
+  roleSet: '角色管理',
+  menuSet: '菜單管理',
+  practice1:'練習1',
+  practice1_1:'練習1-1',
+  practice1_2:'練習1-2',
+  practice1_3:'練習1-3',
+  practice1_4:'練習1-4',
+  practice2:'練習2',
+  practice2_1:'練習2-1',
+  practice2_2:'練習2-2',
+  practice3:'練習3',
+  practice3_1:'練習3-1',
+  practice3_2:'練習3-2',
+  practice3_3:'練習3-3',
+
   // pracOne
   pracOneAccount: '帳號 *',
   pracOnePassword: '密碼 *',

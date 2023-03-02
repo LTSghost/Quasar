@@ -355,8 +355,9 @@ export default defineComponent({
               timeout: 1000,
           })
           $router.push('/login')
+        } else {
+          leftDrawerOpen.value = !leftDrawerOpen.value
         }
-        leftDrawerOpen.value = !leftDrawerOpen.value
       },
       exercise1Links,
       exercise2SolLinks
