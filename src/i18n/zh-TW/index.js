@@ -5,6 +5,11 @@ export default {
   failed: '執行失敗',
   success: '執行成功',
 
+  // AccountLogin
+  Login: '登入',
+  LoginIdRules: '帳號不能為空',
+  LoginPwdRules: '密碼不能為空',
+
   // MainLayout
   chooseLanguage: '請選擇語言',
   routerHome: '首頁',
@@ -14,6 +19,10 @@ export default {
   MainLayoutLink2: '訓練1',
   MainLayoutLink3: '訓練2',
   MainLayoutLink4: '訓練2解答',
+  currentAccount: '當前用戶',
+  MainAccount: '帳號: ',
+  MainAccountName: '用戶名: ',
+  logOut: '登出',
 
   // pracOne
   pracOneAccount: '帳號 *',

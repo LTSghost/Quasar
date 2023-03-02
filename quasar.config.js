@@ -55,8 +55,8 @@ module.exports = configure(function (ctx) {
 
       env:{
         env_API: ctx.dev
-        ? "http://localhost/VueTest/api"
-        : "http://localhost/VueTest/api",
+        ? "http://localhost/VueTestApi/api"
+        : "http://localhost/VueTestApi/api",
       },
 
       // transpile: false,

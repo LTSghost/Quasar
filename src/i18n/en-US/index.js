@@ -5,6 +5,11 @@ export default {
   failed: 'Action failed',
   success: 'Action was successful',
 
+  // AccountLogin
+  Login: 'LOGIN',
+  LoginIdRules: 'Account can\'t empty',
+  LoginPwdRules: 'Password can\'t empty',
+
   // MainLayout
   chooseLanguage: 'Choose Language',
   routerHome: 'Home',
@@ -14,6 +19,10 @@ export default {
   MainLayoutLink2: 'Exercise1',
   MainLayoutLink3: 'Exercise2',
   MainLayoutLink4: 'Exercise2 Sol',
+  currentAccount: 'User',
+  MainAccount: 'Account: ',
+  MainAccountName: 'Name: ',
+  logOut: 'LOGOUT',
 
   // pracOne
   pracOneAccount: 'Account *',

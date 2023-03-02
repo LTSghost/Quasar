@@ -2,6 +2,16 @@
 export function someMutation (state) {
 }
 */
+
+//login
+export function mutateUser(state, status){
+    state.loginUser = status;
+}
+export function mutateUserName(state, status){
+    state.loginUserName = status;
+}
+
+// prac1
 export function mutateAccount(state, status){
     state.account = status;
 }

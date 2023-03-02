@@ -15,6 +15,9 @@
           {{ $t('toolbarTitle') }}
         </q-toolbar-title>
 
+        
+        
+
         <q-select
             v-model="locale"
             :options="localeOptions"
@@ -25,7 +28,11 @@
             map-options
             options-dense
             style="width: 150px;"
-          />
+        >
+            <template v-slot:prepend>
+                <q-icon name="language"></q-icon>
+            </template>
+        </q-select>
 
         <!-- <div>Quasar v{{ $q.version }}</div> -->
         <!-- <q-btn flat color="white" :icon="theme ? 'dark_mode' : 'light_mode'" label="" @click="themeChange" /> -->
@@ -34,12 +41,50 @@
           color="yellow"
           :icon="theme ? 'light_mode' : 'dark_mode'"
         />
+
+        <q-btn-dropdown
+          dropdown-icon="change_history"
+          :icon="dropdownIMG"
+          :rounded="true"
+          class="glossy"
+          color="skyBlue"
+        >
+          <div class="row no-wrap q-pa-md">
+
+            <div class="column">
+              <div class="text-h6 q-mb-md">{{ $t('currentAccount') }}</div>
+              <div class="text-subtitle1 q-mt-md q-mb-xs">{{ $t('MainAccount') }} <span>{{ loginUser }}</span></div>
+              <div class="text-subtitle1 q-mt-md q-mb-xs">{{ $t('MainAccountName') }} <span>{{ loginUserName }}</span></div>
+            </div>
+
+            <q-separator vertical inset class="q-mx-lg" />
+
+            <div class="column items-center">
+              <q-avatar size="72px">
+                <img src="~assets/traing_teemo.svg">
+              </q-avatar>
+
+              <div class="text-subtitle1 q-mt-md q-mb-xs"></div>
+
+              <q-btn
+                color="primary"
+                :label="$t('logOut')"
+                push
+                size="sm"
+                @click="logOut"
+                v-close-popup
+              />
+            </div>
+          </div>
+        </q-btn-dropdown>
+
       </q-toolbar>
     </q-header>
 
+    <!-- show-if-above --> 
     <q-drawer
       v-model="leftDrawerOpen"
-      show-if-above
+      
       bordered
     >
       <q-list>
@@ -108,17 +153,20 @@
     </q-page-container>
     
   </q-layout>
+  
 </template>
 
 <script>
 import { useQuasar } from 'quasar'
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, ref, watch,onMounted } from 'vue'
 import EssentialLink from 'components/EssentialLink.vue'
 import MyQitemExpansion from 'components/MyQitemExpansion.vue'
 import IsTest  from 'components/IsTest.vue'
 import { useI18n } from 'vue-i18n'
 import enUS from 'src/i18n/en-US'
 import zhTW from 'src/i18n/zh-TW'
+import { useStore } from 'vuex'
+import { useRouter } from 'vue-router'
 
 const linksList = [
   {
@@ -231,16 +279,51 @@ export default defineComponent({
   },
 
   setup () {
+    // onMounted(() => {
+    //   console.log("hello mounted");
+    //   console.log($store.state.showcase.loginUser);
+    //   if ($store.state.showcase.loginUser == '') {
+    //     $q.notify({
+    //         message: "請先登入帳號",
+    //         color: "red",
+    //         position: "bottom",
+    //         timeout: 1000,
+    //     })
+    //     $router.push('/login')
+    //   }
+    // })
+    
+    const dropdownIMG = "img:http://localhost:8080/img/traing_teemo.fe480e78.svg"
+    const $router = useRouter()
+    const $store = useStore()
+    const loginUser = ref($store.state.showcase.loginUser)
+    const loginUserName = ref($store.state.showcase.loginUserName)
     const $q = useQuasar()
     const { locale } = useI18n({ useScope: 'global' })
     const leftDrawerOpen = ref(false)
     const theme = ref(true)
+
+    const logOut = () => {
+      userChange('GUEST')
+      nameChange('GUEST')
+      $router.push('/login')
+    }
+
+    // action vuex
+    const userChange = (userId) => {
+        $store.dispatch('showcase/updateUser', userId)
+    }
+    const nameChange = (userName) => {
+      $store.dispatch('showcase/updateUserName', userName)
+    }
+
     const themeChange = () => {
       // eslint-disable-next-line vue/no-side-effects-in-computed-properties
       theme.value = !theme.value
       $q.dark.toggle()
       return 0
     }
+
     const second = ref(true)
     watch(()=> second.value == false, val =>{
         theme.value = !theme.value
@@ -248,6 +331,10 @@ export default defineComponent({
     })
 
     return {
+      logOut,
+      dropdownIMG,
+      loginUserName,
+      loginUser,
       locale,
       localeOptions: [
         { value: 'en-US', label: 'English' },
@@ -259,6 +346,16 @@ export default defineComponent({
       theme,
       themeChange,
       toggleLeftDrawer () {
+        console.log($store.state.showcase.loginUser);
+        if ($store.state.showcase.loginUser == 'GUEST') {
+          $q.notify({
+              message: "請先登入帳號",
+              color: "red",
+              position: "bottom",
+              timeout: 1000,
+          })
+          $router.push('/login')
+        }
         leftDrawerOpen.value = !leftDrawerOpen.value
       },
       exercise1Links,

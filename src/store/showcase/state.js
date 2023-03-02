@@ -1,5 +1,9 @@
 export default function () {
   return {
+    // login
+    loginUser:"GUEST",
+    loginUserName:"GUEST",
+
     // Sol_result
     practiceUserInfo:{
     },

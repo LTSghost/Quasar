@@ -2,6 +2,16 @@
 export function someAction (context) {
 }
 */
+
+// login
+export function updateUser(context, status) {
+    context.commit('mutateUser', status)
+}
+export function updateUserName(context, status) {
+    context.commit('mutateUserName', status)
+}
+
+// prac1
 export function updateAccount(context, status) {
     context.commit('mutateAccount', status)
 }
@@ -23,3 +33,4 @@ export function updatEmail(context, status) {
 export function updatMobile(context, status) {
     context.commit('mutateMobile', status)
 }
+
