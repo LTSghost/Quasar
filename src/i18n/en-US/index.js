@@ -25,22 +25,27 @@ export default {
   logOut: 'LOGOUT',
 
   // QueryMenuInfo
-  systemManage: 'systemManage',
+  systemManage: 'System Manage',
   userSet: 'userSet',
   roleSet: 'roleSet',
   menuSet: 'menuSet',
-  practice1:'practice1',
-  practice1_1:'practice1-1',
-  practice1_2:'practice1-2',
-  practice1_3:'practice1-3',
-  practice1_4:'practice1-4',
-  practice2:'practice2',
-  practice2_1:'practice2-1',
-  practice2_2:'practice2-2',
-  practice3:'practice3',
-  practice3_1:'practice3-1',
-  practice3_2:'practice3-2',
-  practice3_3:'practice3-3',
+  practice1:'Practice1',
+  practice1_1:'Practice1-1',
+  practice1_2:'Practice1-2',
+  practice1_3:'Practice1-3',
+  practice1_4:'Practice1-4',
+  practice2:'Practice2',
+  practice2_1:'Practice2-1',
+  practice2_2:'Practice2-2',
+  practice3:'Practice3',
+  practice3_1:'Practice3-1',
+  practice3_2:'Practice3-2',
+  practice3_3:'Practice3-3',
+
+  // merchMaintain
+  zero_tax: 'zero_tax',
+  taxable: 'taxable',
+  tax_free: 'tax_free',
 
 
   // pracOne

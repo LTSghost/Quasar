@@ -178,7 +178,7 @@
         
     </q-layout>
 
-    {{ name }}
+    <!-- {{ name }} -->
 
 </template>
   
@@ -374,6 +374,7 @@ watch(()=> second.value == false, () =>{
     $q.dark.toggle()
 })
 
+// post/(per locale)
 watchEffect(()=>{
     locale.value
     axios
@@ -381,7 +382,7 @@ watchEffect(()=>{
     .then((res) => {
     if (res.status == "200") {
         
-        name.value = res.data[0].MENU_NAME + " " + res.data[1].MENU_NAME
+        // name.value = res.data[0].MENU_NAME + " " + res.data[1].MENU_NAME
 
         // res.data.forEach((v,i)=>{
         //     data.push(v)
@@ -441,6 +442,12 @@ const toggleLeftDrawer = () => {
         leftDrawerOpen.value = !leftDrawerOpen.value
     }
 }
+
+// detect language
+watch(locale,()=>{  
+    console.log(locale.value)
+    localStorage.setItem('locale', locale.value)
+})
 
 </script>
   

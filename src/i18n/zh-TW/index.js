@@ -42,6 +42,11 @@ export default {
   practice3_2:'練習3-2',
   practice3_3:'練習3-3',
 
+  // merchMaintain
+  zero_tax: '零稅',
+  taxable:  '應稅',
+  tax_free: '免稅',
+
   // pracOne
   pracOneAccount: '帳號 *',
   pracOnePassword: '密碼 *',

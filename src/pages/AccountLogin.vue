@@ -208,8 +208,8 @@ watch(()=> second.value == false, val =>{
 })
 
 // detect language
-watch(locale,()=>{
-    // console.log(locale.value)
+watch(locale,()=>{  
+    console.log(locale.value)
     localStorage.setItem('locale', locale.value)
 })
 
