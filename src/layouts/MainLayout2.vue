@@ -11,11 +11,24 @@
             @click="toggleLeftDrawer"
             />
 
-            <q-toolbar-title>
+            <q-toolbar-title> 
             {{ $t('toolbarTitle') }}
             </q-toolbar-title>
 
-            
+            <div class="q-pa-md q-gutter-sm">
+                <q-breadcrumbs active-color="yellow" class="text-white">
+                    <q-breadcrumbs-el icon="home" to="/home" />
+                    <div v-if="isRoot">
+                    <q-breadcrumbs-el v-for="(val,index) in routeObj[0]"
+                        :label="val"
+                        :key="index"
+                    />
+                    </div>
+                    <!-- <q-breadcrumbs-el label="Docs" icon="widgets" to="/start/pick-quasar-flavour" />
+                    <q-breadcrumbs-el label="Breadcrumbs" icon="navigation" to="/vue-components/breadcrumbs" />
+                    <q-breadcrumbs-el label="Build" icon="build" /> -->
+                </q-breadcrumbs>
+            </div>
             
 
             <q-select
@@ -28,6 +41,7 @@
                 map-options
                 options-dense
                 style="width: 150px;"
+                class="q-ml-xl"
             >
                 <template v-slot:prepend>
                     <q-icon name="language"></q-icon>
@@ -196,8 +210,6 @@ import { useRouter } from 'vue-router'
 import axios from 'axios';
 import MySqlChildExpansion from 'src/components/MySqlChildExpansion.vue'
 
-
-
 const linksList = [
 {
     title: 'Home',
@@ -338,6 +350,23 @@ const $q = useQuasar()
 const { t,locale } = useI18n({ useScope: 'global' })
 const leftDrawerOpen = ref(false)
 const theme = ref(true)
+const isRoot = ref(true)
+
+const nowRouter = ref($router.currentRoute.value.fullPath.replace('/',''))
+console.log($router.currentRoute.value.fullPath)
+
+const routeObj = reactive([
+    {
+        path:$router.currentRoute.value.fullPath.replace('/','')
+    }
+])
+watch($router.currentRoute,()=>{
+    if ($router.currentRoute.value.fullPath == '/home') {
+        console.log('isHome')
+        isRoot.value = false
+    }
+    routeObj[0].path = $router.currentRoute.value.fullPath.replace('/','')
+})
 
 const logOut = () => {
     userChange('GUEST')

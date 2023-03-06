@@ -4,6 +4,7 @@
 export default {
   failed: 'Action failed',
   success: 'Action was successful',
+  confirm: 'Confirm',
 
   // AccountLogin
   Login: 'LOGIN',
@@ -46,6 +47,21 @@ export default {
   zero_tax: 'zero_tax',
   taxable: 'taxable',
   tax_free: 'tax_free',
+  merchNo: 'Item No',
+  merchName: 'Item Name',
+  merchPrice: 'Price',
+  taxType: 'Tax Type',
+  eff_date_from: 'Eff Date From',
+  eff_date_to: 'Eff Date To',
+  operations: 'Operations',
+  queryBtn: 'Query',
+  clearBtn: 'Clear',
+  addBtn: 'Add',
+  confirmDel : 'Confirm Delete',
+  merchAddMsg: 'Merchant Add process， please wait...',
+  merchEditTitle : 'Modify Data',
+  merchSuccessEdit : 'Modify Successed',
+
 
 
   // pracOne

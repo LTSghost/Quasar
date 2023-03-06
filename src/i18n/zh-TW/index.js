@@ -4,6 +4,7 @@
 export default {
   failed: '執行失敗',
   success: '執行成功',
+  confirm: '確認',
 
   // AccountLogin
   Login: '登入',
@@ -46,6 +47,20 @@ export default {
   zero_tax: '零稅',
   taxable:  '應稅',
   tax_free: '免稅',
+  merchNo: '商品代號',
+  merchName: '商品名稱',
+  merchPrice: '價格',
+  taxType: '稅別',
+  eff_date_from: '適用開始日',
+  eff_date_to: '適用結束日',
+  operations: '操作',
+  queryBtn: '查詢',
+  clearBtn: '清空',
+  addBtn: '新增',
+  confirmDel : '確認刪除',
+  merchAddMsg: '商品新增處理中， 請稍後...',
+  merchEditTitle : '修改資料',
+  merchSuccessEdit : '修改成功',
 
   // pracOne
   pracOneAccount: '帳號 *',
