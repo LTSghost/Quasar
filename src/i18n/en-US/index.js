@@ -10,6 +10,8 @@ export default {
   Login: 'LOGIN',
   LoginIdRules: 'Account can\'t empty',
   LoginPwdRules: 'Password can\'t empty',
+  LoginSuccess: 'LOGIN SUCCESS',
+  LoginFail: 'PLEASE LOGIN ACCOUNT',
 
   // MainLayout
   chooseLanguage: 'Choose Language',

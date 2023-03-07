@@ -10,6 +10,8 @@ export default {
   Login: '登入',
   LoginIdRules: '帳號不能為空',
   LoginPwdRules: '密碼不能為空',
+  LoginSuccess: '登入成功',
+  LoginFail: '請先登入帳號',
 
   // MainLayout
   chooseLanguage: '請選擇語言',

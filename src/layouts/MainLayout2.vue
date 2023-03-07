@@ -51,7 +51,7 @@
             <!-- <div>Quasar v{{ $q.version }}</div> -->
             <!-- <q-btn flat color="white" :icon="theme ? 'dark_mode' : 'light_mode'" label="" @click="themeChange" /> -->
             <q-toggle
-            v-model="second"
+            v-model="themeLight"
             color="yellow"
             :icon="theme ? 'light_mode' : 'dark_mode'"
             />
@@ -81,6 +81,7 @@
                 <div class="text-subtitle1 q-mt-md q-mb-xs"></div>
 
                 <q-btn
+                    v-if="isLogout"
                     color="primary"
                     :label="$t('logOut')"
                     push
@@ -88,6 +89,17 @@
                     @click="logOut"
                     v-close-popup
                 />
+
+                <q-btn
+                    v-if="!isLogout"
+                    color="primary"
+                    :label="$t('Login')"
+                    push
+                    size="sm"
+                    @click="logOut"
+                    v-close-popup
+                />
+
                 </div>
             </div>
             </q-btn-dropdown>
@@ -344,13 +356,35 @@ console.log(dynamicStyle);
 const dropdownIMG = "img:http://localhost:8080/img/traing_teemo.fe480e78.svg"
 const $router = useRouter()
 const $store = useStore()
-const loginUser = ref($store.state.showcase.loginUser)
-const loginUserName = ref($store.state.showcase.loginUserName)
+// const loginUser = ref($store.state.showcase.loginUser)
+// const loginUserName = ref($store.state.showcase.loginUserName)
+const loginUser = ref(sessionStorage.getItem('id'))
+const loginUserName = ref(sessionStorage.getItem('name'))
 const $q = useQuasar()
 const { t,locale } = useI18n({ useScope: 'global' })
 const leftDrawerOpen = ref(false)
 const theme = ref(true)
 const isRoot = ref(true)
+const isLogout = ref(true)
+
+onMounted(() => {
+    if ( !sessionStorage.getItem('id') ) {
+        sessionStorage.setItem('theme', 'true')
+        sessionStorage.setItem('id','GUEST')
+        sessionStorage.setItem('name','GUEST')
+    }
+    if ( sessionStorage.getItem('id') == 'GUEST') {
+        isLogout.value = false
+    }
+
+    if (sessionStorage.getItem('theme') == 'true') {
+        theme.value = true
+        themeLight.value = true
+    } else {
+        theme.value = false
+        themeLight.value = false
+    }
+})
 
 const nowRouter = ref($router.currentRoute.value.fullPath.replace('/',''))
 console.log($router.currentRoute.value.fullPath)
@@ -369,6 +403,10 @@ watch($router.currentRoute,()=>{
 })
 
 const logOut = () => {
+    sessionStorage.setItem('id','GUEST')
+    sessionStorage.setItem('name','GUEST')
+    sessionStorage.setItem('pwd','GUEST')
+
     userChange('GUEST')
     nameChange('GUEST')
     $router.push('/login')
@@ -397,8 +435,14 @@ const nameChange = (userName) => {
 }
 
 
-const second = ref(true)
-watch(()=> second.value == false, () =>{
+const themeLight = ref(true)
+watch(themeLight, () =>{
+    if (sessionStorage.getItem('theme') == 'true') {
+        sessionStorage.setItem('theme','false')
+    } else {
+        sessionStorage.setItem('theme','true')
+    }
+
     theme.value = !theme.value
     $q.dark.toggle()
 })
@@ -458,10 +502,10 @@ const localeOptions = reactive([
 ])
 
 const toggleLeftDrawer = () => {
-    console.log($store.state.showcase.loginUser);
-    if ($store.state.showcase.loginUser == 'GUEST') {
+
+    if (sessionStorage.getItem('id') == 'GUEST') {
         $q.notify({
-            message: "請先登入帳號",
+            message: t('LoginFail'),
             color: "red",
             position: "bottom",
             timeout: 1000,
@@ -470,6 +514,19 @@ const toggleLeftDrawer = () => {
     } else {
         leftDrawerOpen.value = !leftDrawerOpen.value
     }
+
+    // console.log($store.state.showcase.loginUser);
+    // if ($store.state.showcase.loginUser == 'GUEST') {
+    //     $q.notify({
+    //         message: "請先登入帳號",
+    //         color: "red",
+    //         position: "bottom",
+    //         timeout: 1000,
+    //     })
+    //     $router.push('/login')
+    // } else {
+    //     leftDrawerOpen.value = !leftDrawerOpen.value
+    // }
 }
 
 // detect language

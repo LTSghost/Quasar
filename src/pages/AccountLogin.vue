@@ -105,11 +105,31 @@
 <script setup>
 import axios from 'axios';
 import { useQuasar } from 'quasar';
-import { ref, reactive, watch } from 'vue'
+import { ref, reactive, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router'
 import { useStore } from 'vuex';
 
+onMounted(() => {
+    if ( !sessionStorage.getItem('id') ) {
+        console.log("沒有ID   RRRR");
+        
+        sessionStorage.setItem('theme','true')
+        sessionStorage.setItem('id','GUEST')
+        sessionStorage.setItem('name','GUEST')
+        sessionStorage.setItem('pwd','GUEST')
+    } else {
+        console.log("有ID了");
+    }
+
+    if (sessionStorage.getItem('theme') == 'true') {
+        theme.value = true
+        second.value = true
+    } else {
+        theme.value = true
+        second.value = false
+    }
+})
 
 const $store = useStore()
 const $q = useQuasar()
@@ -123,6 +143,8 @@ const localeOptions = [
         { value: 'en-US', label: 'English' },
         { value: 'zh-TW', label: '繁體中文' }
       ]
+
+
 
 const userid = ref('admin')
 const idRef = ref(null)
@@ -160,14 +182,18 @@ const postAxios = () => {
     if (res.status == "200") {
         if (res.data.Status == "Y") {
             console.log(res.data.User)
-            console.log(res.data.User.USER_NAME)
+
             userChange(res.data.User.USER_ID)
             nameChange(res.data.User.USER_NAME)
+
+            sessionStorage.setItem('id', res.data.User.USER_ID)
+            sessionStorage.setItem('name', res.data.User.USER_NAME)
+            sessionStorage.setItem('pwd', res.data.User.PASSWORD)
 
             $router.push("/home").then((e) => {
                 $q.notify({
                     // message: res.data.Message,
-                    message: "登入成功",
+                    message: t('LoginSuccess'),
                     color: "green",
                     position: "bottom",
                     timeout: 1000,
@@ -202,9 +228,20 @@ const nameChange = (userName) => {
 }
 
 // detect theme
-watch(()=> second.value == false, val =>{
-        theme.value = !theme.value
-        $q.dark.toggle()
+// watch(()=> second.value == false, val =>{
+//     theme.value = !theme.value
+//     $q.dark.toggle()
+// })
+
+watch(second, ()=>{
+    if (sessionStorage.getItem('theme') == 'true') {
+        sessionStorage.setItem('theme','false')
+    } else {
+        sessionStorage.setItem('theme','true')
+    }
+
+    theme.value = !theme.value
+    $q.dark.toggle()
 })
 
 // detect language

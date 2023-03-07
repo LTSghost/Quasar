@@ -1,12 +1,14 @@
 <template>
     <q-page class="q-ma-sm">
 
+        <!-- upperSearchTable -->
         <div class="q-mb-xs" style="padding: 30px; box-shadow: 1px 1px 1px 1px grey;">
             <div class="q-gutter-x-xl row q-mb-lg">
             <div class="col-3">  
                 <q-input outlined v-model="itemNo" dense>
                     <template v-slot:before>
-                        <span class="text-subtitle2" style="color: black;"> {{ $t('merchNo') }} </span>
+                        <!-- <span class="text-subtitle2" style="color: black;"> {{ $t('merchNo') }} </span> -->
+                        <span class="text-subtitle2" :class="themeChange ? 'text-black' : 'text-white' "> {{ $t('merchNo') }} </span>
                     </template>
                 </q-input>
             </div>
@@ -154,104 +156,6 @@
             </template>
 
             </q-table>
-        </div>
-
-
-        <div v-if="false">
-        <q-table
-        :title="$t('pracTwoTitle')"
-        :grid="isGrid"
-        :rows="rows"  
-        :columns="columns"
-        :filter="filter"
-        :pagination="pagination"
-        separator="cell"
-        row-key="name"
-        :rows-per-page-options="[1,2,5,10]">
-
-        <template v-slot:top-right="props">
-
-            <q-btn class="q-mr-sm" color="primary" :label="$t('pracTwoAdd')" @click="addDialog" />
-
-            <!-- filter input -->
-            <q-input
-            outlined
-            dense
-            debounce="300"
-            v-model="filter"
-            :placeholder="$t('pracTwoSearch')"
-            >
-            <template v-slot:append>
-                <q-icon name="search" />
-            </template>
-            </q-input>
-
-            <!-- fullscreen -->
-            <q-btn
-            flat round dense
-            :icon="props.inFullscreen ? 'fullscreen_exit' : 'fullscreen'"
-            @click="props.toggleFullscreen"
-            class="q-ml-md"
-            ></q-btn>
-
-            <!-- list or grid -->
-            <q-btn
-            flat
-            round
-            dense
-            :icon="isGrid ? 'list' : 'grid_on'"
-            @click="isGrid = !isGrid"
-            >
-            <q-tooltip>{{isGrid ? "List" : "Grid"}}</q-tooltip>
-            </q-btn>
-
-            <!-- exportTable -->
-            <q-btn
-            color="primary"
-            icon-right="archive"
-            :label="$t('pracTwoCSV')"
-            no-caps
-            @click="exportTable"
-            />
-        </template>
-
-        <template v-slot:body="props">
-            <q-tr :props="props">
-            <q-td key="item_no" :props="props">
-                {{ props.row.item_no }}
-            </q-td>
-            <q-td key="item_name" :props="props">
-                {{ props.row.item_name }}
-            </q-td>
-            <q-td key="price" :props="props">
-                {{ props.row.price }}
-            </q-td>
-            <q-td key="eff_date_from" :props="props">
-                {{ props.row.eff_date_from }}
-            </q-td>
-            <q-td key="eff_date_to" :props="props">
-                {{ props.row.eff_date_to }}
-            </q-td>
-            <q-td key="tax" :props="props">
-                <q-badge v-if="props.row.tax === '应税'" color="green">
-                {{ props.row.tax }}
-                </q-badge>
-                <q-badge v-else-if="props.row.tax === '免税'" color="orange">
-                {{ props.row.tax }}
-                </q-badge>
-                <q-badge v-else color="secondary">
-                {{ props.row.tax }}
-                </q-badge>
-            </q-td>
-            <q-td key="calcium" :props="props">
-                <q-btn dense color="blue" @click="editDialog(props)" icon="edit"></q-btn>
-                <!-- <q-btn dense color="red" @click="deleteRow(props.row)" icon="delete" class="q-ml-sm"></q-btn> -->
-                <q-btn dense color="red" @click="deleteOrNot(props)" icon="delete" class="q-ml-sm"></q-btn>
-            </q-td>
-            </q-tr>
-        </template>
-
-        </q-table>
         </div>
 
         <!-- addDialog -->
@@ -552,10 +456,11 @@
                 </q-card-section>
 
                 <q-card-section class="q-pt-none">
-                    {{ $t('confirmDel') }} : <br><br>
-                    {{ $t('merchName') }} {{ delProps.ITEM_NAME }}
+                    {{ $t('confirmDel') }} : 
+                    <br><br>
+                    {{ $t('merchNo') }}： {{ delProps.ITEM_NO }}
                     <br>
-                    {{ $t('merchNo') }} {{ delProps.ITEM_NO }}
+                    {{ $t('merchName') }}： {{ delProps.ITEM_NAME }}
                 </q-card-section>
                 <!-- <q-card-section>
                 idx {{ item_index }}
@@ -588,7 +493,12 @@ const itemName = ref('')
 const taxParam = ref('')
 const effDateFrom = ref('')
 const effDateTo = ref('')
+const themeChange = ref(true)
 
+watch(sessionStorage, () => {
+    console.log("sessChange");
+    themeChange.value = !themeChange.value
+})
 
 const queryAllparam = reactive({
     "TAX": ""
@@ -668,6 +578,7 @@ const taxComputed = computed(() => {
     return ""
 })
 
+// query 
 const param = reactive({
   "ITEM_NO": itemNo,
   "ITEM_NAME": itemName,
@@ -706,6 +617,8 @@ const querySQL = () => {
                 if (item.TAX == '1') {
                     item.TAX_NAME = t('taxable')
                 }
+                item.EFF_DATE_FROM = item.EFF_DATE_FROM.replace('T00:00:00','')
+                item.EFF_DATE_TO = item.EFF_DATE_TO.replace('T00:00:00','')
             })
 
             getData.value = res.data
@@ -745,6 +658,7 @@ const addSQL = (param) => {
         Loading.hide()
         querySQL()
     }, 500);
+
 }
 const updateSQL = (param) => {
     console.log("execute updateSQL");
@@ -762,6 +676,8 @@ const deleteSQL = (param) => {
         querySQL()
     }, 300);
 }
+
+console.log("new data:", getData.value);
 
 
 // post/(per locale)
@@ -839,6 +755,8 @@ const QueryProductMethod = (param) => {
                 if (item.TAX == '1') {
                     item.TAX_NAME = t('taxable')
                 }
+                item.EFF_DATE_FROM = item.EFF_DATE_FROM.replace('T00:00:00','')
+                item.EFF_DATE_TO = item.EFF_DATE_TO.replace('T00:00:00','')
             })
 
             console.log(res.data);
@@ -882,7 +800,7 @@ const updateProductMethod = (param) => {
     .then((res) => {
         if (res.status == "200") {
             updateSuccessedMsg.value = t('merchSuccessEdit')
-
+            // querySQL()
             setTimeout(() => {
                 editForm.value.isSuccessed = true
             }, 300);
@@ -944,7 +862,6 @@ watchEffect(()=>{
 
 const filter = ref('')
 const isGrid = ref(false)
-const rows = ref(json)
 
 const isQuery = ref(false)
 
@@ -967,24 +884,7 @@ const pagination = ref({
       rowsPerPage: 5
     })
 
-const columns = [
-  {
-    name: 'item_no',
-    required: true,
-    label: '商品代號',
-    align: 'left',
-    field: row => row.item_no,
-    format: val => `${val}`,
-    sortable: true
-  },
-  { name: 'item_name', align: 'center', label: '商品名稱', field: row => row.item_name, sortable: true },
-  { name: 'price', label: '價格', field: 'price',align:'center', sortable: true },
-  { name: 'eff_date_from', label: '適用開始日', field: 'eff_date_from',align:'center',sortable: true },
-  { name: 'eff_date_to', label: '適用結束日', field: 'eff_date_to',align:'center',sortable: true },
-  { name: 'tax', label: '稅別', field: 'tax',align:'center',sortable: true },
-  { name: 'calcium', label: '操作', field: 'calcium',align:'center'}
-]
-
+    
 // dialog
 const addForm = ref({
   data: null,
@@ -1063,26 +963,7 @@ const addDialog = () => {
 
   addForm.value.isEdit = true
 }
-const handleAdd = () => {
-  // key ['item_no','item_name'...]
-  // console.log(addForm.value.model[key])
-  rows.value.push({
-    "item_no": addForm.value.model["item_no"],
-    "item_name": addForm.value.model["item_name"],
-    "price": addForm.value.model["price"],
-    "eff_date_from": addForm.value.model["eff_date_from"],
-    "eff_date_to": addForm.value.model["eff_date_to"],
-    "tax": addForm.value.model["tax"]
-  })
 
-  addForm.value.model["item_no"] = null
-  addForm.value.model["item_name"] = null
-  addForm.value.model["price"] = null
-  addForm.value.model["eff_date_from"] = null
-  addForm.value.model["eff_date_to"] = null
-  addForm.value.model["tax"] = null
-
-}
 const onSubmitAdd = () => {
 
     console.log("submitAdd")
@@ -1108,17 +989,6 @@ const onSubmitAdd = () => {
         "CREATOR": $store.state.showcase.loginUser  
     }
     addSQL(tmpParam)
-
-    // key ['item_no','item_name'...]
-    // console.log(addForm.value.model[key])
-    rows.value.push({
-    "item_no": addForm.value.model["item_no"],
-    "item_name": addForm.value.model["item_name"],
-    "price": addForm.value.model["price"],
-    "eff_date_from": addForm.value.model["eff_date_from"].replaceAll('/','-'),
-    "eff_date_to": addForm.value.model["eff_date_to"].replaceAll('/','-'),
-    "tax": addForm.value.model["tax"]
-    })
 
     addForm.value.model["item_no"] = null
     addForm.value.model["item_name"] = null
@@ -1152,16 +1022,7 @@ const editDialog = (props) => {
   
   console.log(editForm.value.data)
 }
-const handleEdit = () => {
-  // console.log(editForm.value.model)
-  // key ['item_no','item_name'...]
-  for (let key in editForm.value.model) {
-    editForm.value.data.row[key] = editForm.value.model[key]
-    editForm.value.model[key] = null
-  }
-  
-  // console.log(editForm.value.data.row['item_no'] = 10)
-}
+
 const onSubmitEdit = () => {
     var taxText = editForm.value.model.TAX
     if (taxText == '零稅' || taxText == 'zero_tax') {
