@@ -177,8 +177,10 @@ const popErrMsg = (msg) => {
 
 const postAxios = () => {
   axios
-    .post(process.env.env_API + "/VueTest/Login", paramObj)
+    // .post(process.env.env_API + "/VueTest/Login", paramObj)
+    .post("http://localhost:8080/api/v1/sys_user/validate", paramObj)
     .then((res) => {
+        console.log(res);
     if (res.status == "200") {
         if (res.data.Status == "Y") {
             console.log(res.data.User)
@@ -200,6 +202,7 @@ const postAxios = () => {
                 })
             })
         } else {
+            console.log("is error");
             $q.notify({
                     // message: res.data.Message,
                     message: res.data.Message,
@@ -218,6 +221,8 @@ const postAxios = () => {
     popErrMsg("帳號或密碼錯誤")
   })
 }
+
+
 
 // action vuex
 const userChange = (userId) => {
@@ -249,5 +254,27 @@ watch(locale,()=>{
     console.log(locale.value)
     localStorage.setItem('locale', locale.value)
 })
+
+
+const testtt = () => {
+    console.log("test testtt");
+    axios
+    .get("http://localhost:8080/api/v1/sys_menu")
+    .then((res) => {
+        if (res.status == "200") {
+
+            console.log("responseData = ",res.data);
+
+           
+        } else {
+            popErrMsg("not found")
+        }
+    })
+    .catch((error)=>{
+        console.error(error.message)
+        popErrMsg("not found")
+    })
+}
+testtt()
 
 </script>

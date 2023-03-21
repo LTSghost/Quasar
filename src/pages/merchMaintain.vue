@@ -594,6 +594,7 @@ const querySQL = () => {
     isQuery.value = true
     axios
     .post(process.env.env_API + "/VueTest/QueryProduct", param)
+    // .get("http://localhost:8080/api/v1/products")
     .then((res) => {
         if (res.status == "200") {
 
@@ -634,6 +635,8 @@ const querySQL = () => {
         console.error(error.message)
         popErrMsg("not found")
     })
+
+    querySysrole()
 }
 const clearSQL = () => {
     console.log("execute clearSQL");
@@ -675,6 +678,22 @@ const deleteSQL = (param) => {
     setTimeout(() => {
         querySQL()
     }, 300);
+}
+
+
+const querySysrole = () => {
+    axios.get("http://localhost:8080/api/v1/sysrole/search?query=")
+    .then((res) => {
+        if (res.status == "200") {
+            console.log(res.data);
+        } else {
+            popErrMsg("not found")
+        }
+    })
+    .catch((error)=>{
+        console.error(error.message)
+        popErrMsg("not found")
+    })
 }
 
 console.log("new data:", getData.value);

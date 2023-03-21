@@ -353,7 +353,7 @@ console.log(dynamicStyle);
 
 
     
-const dropdownIMG = "img:http://localhost:8080/img/traing_teemo.fe480e78.svg"
+const dropdownIMG = "img:http://localhost:8083/img/traing_teemo.fe480e78.svg"
 const $router = useRouter()
 const $store = useStore()
 // const loginUser = ref($store.state.showcase.loginUser)
@@ -451,10 +451,13 @@ watch(themeLight, () =>{
 watchEffect(()=>{
     locale.value
     axios
-    .post(process.env.env_API + "/VueTest/QueryMenuInfo", paramObj)
+    // .post(process.env.env_API + "/VueTest/QueryMenuInfo", paramObj)
+    .get("http://localhost:8080/api/v1/sys_menu")
     .then((res) => {
     if (res.status == "200") {
-        
+
+        console.log(res.data);
+
         // name.value = res.data[0].MENU_NAME + " " + res.data[1].MENU_NAME
 
         // res.data.forEach((v,i)=>{
@@ -478,6 +481,7 @@ watchEffect(()=>{
         res.data[3].children[0].MENU_NAME = t('practice3_1')
         res.data[3].children[1].MENU_NAME = t('practice3_2')
         res.data[3].children[2].MENU_NAME = t('practice3_3')
+
         // console.log(res.data[0].MENU_NAME);
 
         data.value = res.data

@@ -293,7 +293,7 @@ export default defineComponent({
     //   }
     // })
     
-    const dropdownIMG = "img:http://localhost:8080/img/traing_teemo.fe480e78.svg"
+    const dropdownIMG = "img:http://localhost:8083/img/traing_teemo.fe480e78.svg"
     const $router = useRouter()
     const $store = useStore()
     const loginUser = ref($store.state.showcase.loginUser)
