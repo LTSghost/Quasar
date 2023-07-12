@@ -74,9 +74,9 @@
                 <q-separator vertical inset class="q-mx-lg" />
 
                 <div class="column items-center">
-                <q-avatar size="72px">
-                    <img src="~assets/traing_teemo.svg">
-                </q-avatar>
+                    <q-avatar size="72px">
+                        <img src="~assets/traing_teemo.svg">
+                    </q-avatar>
 
                 <div class="text-subtitle1 q-mt-md q-mb-xs"></div>
 
@@ -352,8 +352,8 @@ console.log(name);
 console.log(dynamicStyle);
 
 
-    
-const dropdownIMG = "img:http://localhost:8083/img/traing_teemo.fe480e78.svg"
+
+const dropdownIMG = "img:http://localhost:8093/img/traing_teemo.fe480e78.svg"
 const $router = useRouter()
 const $store = useStore()
 // const loginUser = ref($store.state.showcase.loginUser)
@@ -452,7 +452,7 @@ watchEffect(()=>{
     locale.value
     axios
     // .post(process.env.env_API + "/VueTest/QueryMenuInfo", paramObj)
-    .get("http://localhost:8080/api/v1/sys_menu")
+    .get(process.env.baseURL + "/api/v1/sys_menu")
     .then((res) => {
     if (res.status == "200") {
 

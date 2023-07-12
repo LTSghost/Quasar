@@ -169,7 +169,7 @@ const routes = [
     path: '/',
     component: () => import('layouts/MainLayout2.vue'),
     children: [
-      { path: 'UserSet', component: () => import('pages/IndexPage.vue') }
+      { path: 'UserSet', component: () => import('pages/System/UserSet.vue') }
     ]
   },
   {

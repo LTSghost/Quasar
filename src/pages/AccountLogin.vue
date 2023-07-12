@@ -40,9 +40,9 @@
                 class="col-12 col-md-6 flex content-center">
             <q-card v-bind:style="$q.screen.lt.sm ? {'width': '80%'} : {'width': '50%'}">
                 <q-card-section>
-                <q-avatar size="103px" class="absolute-center shadow-10">
-                    <img src="~assets/traing_teemo.svg" alt="avatar">
-                </q-avatar>
+                    <q-avatar size="103px" class="absolute-center shadow-10">
+                        <img src="~assets/traing_teemo.svg" alt="avatar">
+                    </q-avatar>
                 </q-card-section>
                 <q-card-section>
                 <div class="q-pt-lg">
@@ -178,7 +178,7 @@ const popErrMsg = (msg) => {
 const postAxios = () => {
   axios
     // .post(process.env.env_API + "/VueTest/Login", paramObj)
-    .post("http://localhost:8080/api/v1/sys_user/validate", paramObj)
+    .post("http://localhost:8083/api/v1/sys_user/validate", paramObj)
     .then((res) => {
         console.log(res);
     if (res.status == "200") {

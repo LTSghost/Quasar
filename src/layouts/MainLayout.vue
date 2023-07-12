@@ -61,7 +61,7 @@
 
             <div class="column items-center">
               <q-avatar size="72px">
-                <img src="~assets/traing_teemo.svg">
+                <!-- <img src="~assets/traing_teemo.svg"> -->
               </q-avatar>
 
               <div class="text-subtitle1 q-mt-md q-mb-xs"></div>
@@ -293,7 +293,7 @@ export default defineComponent({
     //   }
     // })
     
-    const dropdownIMG = "img:http://localhost:8083/img/traing_teemo.fe480e78.svg"
+    const dropdownIMG = "img:http://localhost:8083/assets/traing_teemo.svg"
     const $router = useRouter()
     const $store = useStore()
     const loginUser = ref($store.state.showcase.loginUser)

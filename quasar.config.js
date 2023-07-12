@@ -57,6 +57,7 @@ module.exports = configure(function (ctx) {
         env_API: ctx.dev
         ? "http://localhost/VueTestApi/api"
         : "http://localhost/VueTestApi/api",
+        baseURL: "http://localhost:8083"
       },
 
       // transpile: false,
@@ -91,7 +92,7 @@ module.exports = configure(function (ctx) {
       server: {
         type: 'http'
       },
-      port: 8083,
+      port: 8093,
       open: true // opens browser window automatically
     },
 

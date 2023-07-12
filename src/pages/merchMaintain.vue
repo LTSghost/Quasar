@@ -593,8 +593,11 @@ const querySQL = () => {
     console.log("execute querySQL");
     isQuery.value = true
     axios
-    .post(process.env.env_API + "/VueTest/QueryProduct", param)
+    // .post(process.env.env_API + "/VueTest/QueryProduct", param)
     // .get("http://localhost:8080/api/v1/products")
+    // .get("http://localhost:8080/api/v1/products/joinQuery")
+    .post("http://localhost:8091/product/testDynamic",param)
+    // .post("http://localhost:8080/api/v1/products/postRead",param)
     .then((res) => {
         if (res.status == "200") {
 
@@ -721,7 +724,9 @@ watch(locale, () => {
 
 const QueryProductMethod = (param) => {
     axios
-    .post(process.env.env_API + "/VueTest/QueryProduct", param)
+    // .post(process.env.env_API + "/VueTest/QueryProduct", param)
+    // .post("http://localhost:8080/api/v1/products/postRead", param)
+    .post("http://localhost:8091/product/testDynamic",param)
     .then((res) => {
         if (res.status == "200") {
 
@@ -797,7 +802,8 @@ QueryProductMethod(param)
 
 const addProductMethod = (param) => {
     axios
-    .post(process.env.env_API + "/VueTest/AddProduct", param)
+    // .post(process.env.env_API + "/VueTest/AddProduct", param)
+    .post("http://localhost:8080/api/v1/products",param)
     .then((res) => {
         if (res.status == "200") {
             console.log(res);
@@ -815,7 +821,8 @@ const addProductMethod = (param) => {
 const updateSuccessedMsg = ref('')
 const updateProductMethod = (param) => {
     axios
-    .post(process.env.env_API + "/VueTest/UpdateProduct", param)
+    // .post(process.env.env_API + "/VueTest/UpdateProduct", param)
+    .put("http://localhost:8080/api/v1/products/" + param.ITEM_NO + "", param)
     .then((res) => {
         if (res.status == "200") {
             updateSuccessedMsg.value = t('merchSuccessEdit')
@@ -836,7 +843,8 @@ const updateProductMethod = (param) => {
 
 const deleteProductMethod = (param) => {
     axios
-    .post(process.env.env_API + "/VueTest/DeleteProduct", param)
+    // .post(process.env.env_API + "/VueTest/DeleteProduct", param)
+    .post("http://localhost:8080/api/v1/products/" + param.ITEM_NO + "")
     .then((res) => {
         if (res.status == "200") {
             console.log(res);

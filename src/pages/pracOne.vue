@@ -289,6 +289,7 @@ watch(()=> nowLanguage.value == 'en-US', val =>{
 // ]
 
 const accountRules = [
+  val => true,
   val => !!val || '請輸入帳號',
   val => (5 < val.length && val.length < 19) || '請輸入6-18字符',
   val => (/^[a-zA-Z][0-9_a-zA-Z]{1,17}$/.test(val)) || "只能包含數字,字母,下劃線且得字母開頭"
@@ -372,13 +373,14 @@ const onSubmit = () => {
           // form has error
           return 0
   }
-  else if (toggleValue.value !== true) {
+  else if (!toggleValue.value) {
     $q.notify({
       color: 'negative',
       message: 'You need to accept the license and terms first'
     })
   }
   else {
+    console.log(toggleValue.value);
     $q.notify({
       icon: 'done',
       color: 'positive',
